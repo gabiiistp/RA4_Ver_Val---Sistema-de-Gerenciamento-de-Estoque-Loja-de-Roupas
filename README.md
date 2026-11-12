@@ -1,324 +1,408 @@
-# Sistema de Gerenciamento de Estoque – Loja de Roupas
+<div align="center">
 
-## 1. Sobre o projeto
+# 👕 Sistema de Gerenciamento de Estoque
 
-O **Sistema de Gerenciamento de Estoque** é um projeto acadêmico desenvolvido na disciplina de Verificação e Validação de Software, utilizando as práticas de desenvolvimento **BDD (Behavior Driven Development)** e **TDD (Test Driven Development)**.
+### Loja de Roupas · BDD + TDD em Java
 
-O objetivo do sistema é facilitar o controle de produtos de uma loja de roupas, permitindo cadastrar, editar, excluir e consultar produtos, além de controlar entradas e saídas de mercadorias e acompanhar a quantidade disponível em estoque.
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
+![JUnit5](https://img.shields.io/badge/JUnit_5-25A162?style=for-the-badge&logo=junit5&logoColor=white)
+![Cucumber](https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white)
+![IntelliJ](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=for-the-badge&logo=intellijidea&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
-O projeto será desenvolvido em Java, utilizando o IntelliJ IDEA, com testes automatizados para verificar o funcionamento das funcionalidades implementadas.
+![Status](https://img.shields.io/badge/status-em_desenvolvimento-yellow?style=flat-square)
+![Entrega](https://img.shields.io/badge/entrega-18%2F11_no_AVA-red?style=flat-square)
+![Peso](https://img.shields.io/badge/RA4-60%25_da_nota-blue?style=flat-square)
 
-## 2. Objetivos
+**Verificação e Validação de Software · PUCPR**
 
-- Desenvolver um sistema simples de gerenciamento de estoque.
-- Aplicar BDD para descrever os comportamentos esperados do sistema.
-- Aplicar TDD para orientar o desenvolvimento por meio de testes automatizados.
-- Criar testes para situações positivas e negativas.
-- Trabalhar com versionamento de código utilizando Git e GitHub.
-- Documentar as etapas de desenvolvimento com evidências.
+</div>
 
-## 3. Tecnologias utilizadas
+---
 
-| Tecnologia    | Finalidade                              |
-| ------------- | --------------------------------------- |
-| Java          | Linguagem de programação                |
-| IntelliJ IDEA | Ambiente de desenvolvimento             |
-| Maven         | Gerenciamento do projeto e dependências |
-| JUnit 5       | Testes automatizados (TDD)              |
-| Cucumber      | Implementação dos cenários BDD          |
-| Gherkin       | Escrita dos cenários de comportamento   |
-| Git e GitHub  | Versionamento e integração do código    |
+## 📌 Resumo rápido
 
-## 4. Funcionalidades do sistema
+| | |
+|---|---|
+| 🎯 **Objetivo** | Praticar BDD e TDD com um sistema simples de estoque |
+| 👥 **Equipe** | 4 integrantes (Isa, Gabi, Pedro, Laura) |
+| 📦 **Entrega** | Código + cenários BDD + relatório TDD com evidências |
+| 📅 **Prazo** | 18/11 no AVA |
+| 👨‍🏫 **Professor** | _preencher_ · escopo aprovado? _preencher_ |
+| 🧪 **Abordagem** | Teste de **caixa preta** (BDD com Cucumber) + TDD com JUnit |
+| ☕ **Java** | JDK _preencher versão_ |
 
-O desenvolvimento será dividido entre quatro integrantes, com responsabilidades específicas.
+---
 
-### Integrante 1 – Isa
+## 🗺️ Quem faz o quê
 
-1. Cadastrar produto.
-2. Excluir produto.
-3. Adicionar produto cadastrado ao estoque (entrada).
+| | Integrante | Funcionalidades | Branch |
+|:-:|---|---|---|
+| 🥇 | **Isa** | Cadastrar · Excluir · Entrada no estoque | `feature/isa` |
+| 🥈 | **Gabi** | Editar · Listar · Saída do estoque | `feature/gabi` |
+| 🥈 | **Pedro** | Log de entrada · Log de saída | `feature/pedro` |
+| 🥉 | **Laura** | Buscar por nome · Estoque baixo | `feature/laura` |
 
-### Integrante 2 – Gabi
+---
 
-1. Editar informações do produto.
-2. Listar todos os produtos.
-3. Remover produto cadastrado do estoque (saída).
+## 🚦 Ordem de desenvolvimento
 
-### Integrante 3 – Pedro
+> **Regra de ouro:** todo mundo depende da classe `Produto`. Por isso a **Isa começa**, e o Pedro começa em paralelo porque o log dele não depende de produto.
 
-1. Registrar entrada de produtos (log).
-2. Registrar saída de produtos (log).
+<img width="598" height="566" alt="Captura de tela_12-11-2026_175141_claude ai" src="https://github.com/user-attachments/assets/f4c21766-fb09-4964-94f3-1d4200c5835c" />
 
-### Integrante 4 – Laura
 
-1. Buscar produtos pelo nome.
-2. Consultar produtos com estoque baixo.
+### 📆 Sugestão de cronograma
 
-## 5. Estrutura do projeto
+| Quando | Fase | Quem |
+|---|---|---|
+| 12–13/11 | 🛠️ Setup + 🥇 Fase 1 | Isabelle (base) · Pedro (log) |
+| 13–15/11 | 🥈🥉 Fase 2 | Gabriela · Laura · Isa |
+| 15–16/11 | Saída + 🔗 Integração | Gabriela · Pedro · Isabelle |
+| 16–17/11 | 📸 Evidências e relatório | Todos |
+| **18/11** | 🚀 **Entrega no AVA** | Todos |
 
-O projeto seguirá uma organização baseada na separação de responsabilidades, facilitando a manutenção e o desenvolvimento em equipe.
+---
+
+## 🧑‍💻 Onde cada um desenvolve
+
+### 🥇 Isa · `feature/isabelle`
+
+| Tipo | Arquivo |
+|---|---|
+| 🧱 Model | `model/Produto.java` |
+| 💾 Repository | `repository/ProdutoRepository.java` |
+| ⚙️ Service | `service/ProdutoService.java` (cadastrar, excluir) · `service/EstoqueService.java` (entrada) |
+| 🧪 JUnit | `tests/CadastroProdutoTest` · `ExclusaoProdutoTest` · `EntradaEstoqueTest` |
+| 🥒 Feature | `cadastro.feature` · `exclusao.feature` |
+| 👣 Steps | `steps/CadastroSteps` · `ExclusaoSteps` · `EntradaSteps` |
+| 📸 Evidências | `evidencias/isa/` |
+
+**Passo a passo**
+- [ ] 1. Setup: subir o esqueleto do projeto (já vem com `pom.xml`, pastas e runner do Cucumber) e conferir que `mvn test` roda
+- [ ] 2. `Produto` + `ProdutoRepository` (em memória) → **PR para a main logo**
+- [ ] 3. Cadastrar produto (RN01–RN04)
+- [ ] 4. Excluir produto (RN11)
+- [ ] 5. Entrada no estoque (RN06) → cria o `EstoqueService`
+- [ ] 6. Evidências RED / GREEN / REFACTOR / BDD
+
+---
+
+### 🥈 Gabi · `feature/gabriela`
+
+| Tipo | Arquivo |
+|---|---|
+| ⚙️ Service | `service/ProdutoService.java` (editar, listar) · `service/EstoqueService.java` (saída) |
+| 🧪 JUnit | `tests/EdicaoProdutoTest` · `ListagemProdutosTest` · `SaidaEstoqueTest` |
+| 🥒 Feature | `edicao.feature` · `listagem.feature` |
+| 👣 Steps | `steps/EdicaoSteps` · `ListagemSteps` · `SaidaSteps` |
+| 📸 Evidências | `evidencias/gabi/` |
+
+**Passo a passo**
+- [ ] 1. ⏳ Espera o PR da Isa com `Produto` (enquanto isso: escreve os cenários `.feature`)
+- [ ] 2. Editar produto (RN11)
+- [ ] 3. Listar produtos
+- [ ] 4. ⏳ Espera a Isa criar o `EstoqueService`
+- [ ] 5. Saída do estoque (RN05, RN07)
+- [ ] 6. Evidências RED / GREEN / REFACTOR / BDD
+
+---
+
+### 🥈 Pedro · `feature/pedro`
+
+| Tipo | Arquivo |
+|---|---|
+| 🧱 Model | `model/Movimentacao.java` |
+| 💾 Repository | `repository/MovimentacaoRepository.java` |
+| ⚙️ Service | `service/MovimentacaoService.java` |
+| 🧪 JUnit | `tests/RegistroEntradaTest` · `RegistroSaidaTest` |
+| 🥒 Feature | `movimentacao.feature` |
+| 👣 Steps | `steps/MovimentacaoSteps` |
+| 📸 Evidências | `evidencias/pedro/` |
+
+**Passo a passo**
+- [ ] 1. ✅ Pode começar já (usa só o código do produto, sem depender de `Produto`)
+- [ ] 2. `Movimentacao` + `MovimentacaoRepository`
+- [ ] 3. Registrar entrada no log
+- [ ] 4. Registrar saída no log (RN08)
+- [ ] 5. Combinar com Isa e Gabi o método que elas vão chamar (ex.: `registrar(codigo, tipo, quantidade)`)
+- [ ] 6. Evidências RED / GREEN / REFACTOR / BDD
+
+---
+
+### 🥉 Laura · `feature/laura`
+
+| Tipo | Arquivo |
+|---|---|
+| ⚙️ Service | `service/ConsultaService.java` (classe nova, para não dar conflito com o `ProdutoService`) |
+| 🧪 JUnit | `tests/BuscaPorNomeTest` · `EstoqueBaixoTest` |
+| 🥒 Feature | `consulta.feature` |
+| 👣 Steps | `steps/ConsultaSteps` |
+| 📸 Evidências | `evidencias/laura/` |
+
+**Passo a passo**
+- [ ] 1. ⏳ Espera o PR da Isa com `Produto` (enquanto isso: escreve os cenários `.feature`)
+- [ ] 2. Buscar produto pelo nome (RN09)
+- [ ] 3. Consultar estoque baixo (RN10)
+- [ ] 4. Evidências RED / GREEN / REFACTOR / BDD
+
+---
+
+## ⚠️ Arquivos compartilhados (cuidado com conflito)
+
+| Arquivo | Quem mexe | Como evitar conflito |
+|---|---|---|
+| `Produto.java` | Isa (dona) | Ninguém altera sem avisar; pedir por PR/mensagem |
+| `ProdutoService.java` | Isa, Gabi | Cada uma adiciona **métodos próprios**; dar `git pull origin main` antes de abrir PR |
+| `EstoqueService.java` | Isa (entrada), Gabi (saída) | Isa cria primeiro e faz merge; Gabi adiciona a saída depois |
+| `pom.xml` e runner | Isa (Setup) | Só a Isa mexe; os outros pedem o que precisarem |
+| `steps/` | Todos | **Uma classe de steps por feature**, nunca no mesmo arquivo |
+
+---
+
+## 🔴🟢🔵 Ciclo TDD (para cada funcionalidade)
+
+```text
+ 🔴 RED       escreve o teste → roda → FALHA        📸 print
+      ↓
+ 🟢 GREEN     implementa o mínimo → roda → PASSA    📸 print
+      ↓
+ 🔵 REFACTOR  limpa o código → roda → continua OK   📸 print
+```
+
+## 🥒 Ciclo BDD (para cada funcionalidade)
+
+```text
+ 1. Escrever o cenário no .feature (Dado / Quando / Então)
+ 2. Escrever os steps
+ 3. Rodar o cenário
+ 4. 📸 Print do Gherkin + resultado
+```
+
+> 💡 Sempre incluir `# language: pt` na primeira linha dos arquivos `.feature`.
+> 💡 Cada funcionalidade precisa de **pelo menos 1 cenário positivo e 1 negativo**.
+
+```gherkin
+# language: pt
+Funcionalidade: Cadastro de produtos
+
+  Cenário: Cadastrar produto com sucesso
+    Dado que estou no sistema de estoque
+    Quando cadastro um produto com código "001"
+    E informo o nome "Blusa"
+    E informo o tamanho "M"
+    E informo a cor "Preta"
+    E informo o preço "59.90"
+    Então o produto deve ser cadastrado com sucesso
+
+  Cenário: Cadastrar produto com código duplicado
+    Dado que já existe um produto com código "001"
+    Quando tento cadastrar outro produto com o mesmo código
+    Então o sistema deve impedir o cadastro
+    E apresentar uma mensagem de erro
+```
+
+---
+
+## ⬛ Teste de caixa preta (no Cucumber)
+
+> Caixa preta = testar **o que o sistema deve fazer** (entrada → resultado), sem depender de **como** o código foi escrito.
+
+### Regras para escrever os steps
+
+| ✅ Pode | ❌ Não pode |
+|---|---|
+| Partir das **regras de negócio** (RN01–RN11) | Partir de como o código foi implementado |
+| Chamar só **métodos públicos** dos services | Mexer direto no repository ou em atributos internos |
+| Conferir só o **resultado** (mensagem, lista, quantidade) | Conferir variáveis internas ou chamadas de método |
+| Escolher os casos com as **técnicas** abaixo | Escolher casos olhando os `if` do código |
+
+### Técnicas e onde aplicar
+
+| Técnica | Aplicação neste projeto |
+|---|---|
+| 🟦 **Partição de equivalência** | Tamanho: `P`, `M`, `G`, `GG` (válidos) vs. `XL` (inválido) · campo preenchido vs. vazio |
+| 📏 **Valor limite** | Preço: `-1`, `0`, `0.01` · Quantidade inicial: `-1`, `0`, `1` · Saída: igual ao disponível vs. disponível + 1 |
+| 📋 **Tabela de decisão** | Saída: produto existe? × quantidade suficiente? |
+| 🔁 **Transição de estado** | Quantidade antes e depois de entrada e saída |
+
+### Exemplo com `Esquema do Cenário` (valor limite)
+
+```gherkin
+# language: pt
+Funcionalidade: Cadastro de produtos
+
+  Esquema do Cenário: Validar preço no cadastro
+    Quando cadastro um produto com preço "<preco>"
+    Então o resultado deve ser "<resultado>"
+
+    Exemplos:
+      | preco | resultado                           |
+      | -1    | Erro: preço deve ser maior que zero |
+      | 0     | Erro: preço deve ser maior que zero |
+      | 0.01  | Produto cadastrado com sucesso      |
+      | 59.90 | Produto cadastrado com sucesso      |
+```
+
+---
+
+## 🌿 Fluxo Git
+
+```text
+main ─────────────●────────●────────●──────────▶   (nunca commitar direto)
+                   ↑        ↑        ↑
+feature/isa  ──────┘        │        │
+feature/pedro ──────────────┘        │
+feature/gabi / laura ────────────────┘
+```
+
+| Passo | Comando |
+|---|---|
+| 1. Clonar | `git clone URL_DO_REPOSITORIO` |
+| 2. Criar branch | `git checkout -b feature/seu-nome` |
+| 3. Atualizar com a main | `git pull origin main` |
+| 4. Commit | `git commit -m "test: cadastro de produto (RED)"` |
+| 5. Enviar | `git push -u origin feature/seu-nome` |
+| 6. Pull Request | Abrir PR para a `main` no GitHub |
+
+**Padrão de commit:** `test:` (RED) · `feat:` (GREEN) · `refactor:` · `docs:`
+
+---
+
+## 🏗️ Estrutura do projeto
 
 ```text
 SistemaEstoque/
-│
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── br/pucpr/sistemaestoque/
-│   │           ├── model/
-│   │           │   ├── Produto.java
-│   │           │   └── Movimentacao.java
-│   │           │
-│   │           ├── service/
-│   │           │   ├── ProdutoService.java
-│   │           │   ├── EstoqueService.java
-│   │           │   └── MovimentacaoService.java
-│   │           │
-│   │           └── repository/
-│   │               ├── ProdutoRepository.java
-│   │               └── MovimentacaoRepository.java
-│   │
-│   └── test/
-│       ├── java/
-│       │   └── br/pucpr/sistemaestoque/
-│       │       ├── tests/
-│       │       ├── steps/
-│       │       └── runners/
-│       │
-│       └── resources/
-│           └── features/
-│               ├── cadastro.feature
-│               ├── edicao.feature
-│               ├── exclusao.feature
-│               ├── listagem.feature
-│               ├── movimentacao.feature
-│               └── consulta.feature
-│
-├── evidencias/
-│   ├── isa/
-│   │   ├── RED/
-│   │   ├── GREEN/
-│   │   ├── REFACTOR/
-│   │   └── BDD/
-│   │
-│   ├── gabi/
-│   │   ├── RED/
-│   │   ├── GREEN/
-│   │   ├── REFACTOR/
-│   │   └── BDD/
-│   │
-│   ├── pedro/
-│   │   ├── RED/
-│   │   ├── GREEN/
-│   │   ├── REFACTOR/
-│   │   └── BDD/
-│   │
-│   └── laura/
-│       ├── RED/
-│       ├── GREEN/
-│       ├── REFACTOR/
-│       └── BDD/
-│
+├── 📁 src/
+│   ├── 📁 main/java/br/pucpr/sistemaestoque/
+│   │   ├── 📁 model/
+│   │   │   ├── Produto.java               🥇 Isabelle
+│   │   │   └── Movimentacao.java          🥈 Pedro
+│   │   ├── 📁 service/
+│   │   │   ├── ProdutoService.java        🥇 Isabelle + 🥈 Gabriela
+│   │   │   ├── EstoqueService.java        🥇 Isabelle + 🥈 Gabriela
+│   │   │   ├── MovimentacaoService.java   🥈 Pedro
+│   │   │   └── ConsultaService.java       🥉 Laura
+│   │   └── 📁 repository/
+│   │       ├── ProdutoRepository.java     🥇 Isabelle
+│   │       └── MovimentacaoRepository.java 🥈 Pedro
+│   └── 📁 test/
+│       ├── 📁 java/br/pucpr/sistemaestoque/
+│       │   ├── 📁 tests/                  🧪 JUnit (todos)
+│       │   ├── 📁 steps/                  👣 Steps (um por feature)
+│       │   └── 📁 runners/                🏃 Runner (Isabelle)
+│       └── 📁 resources/features/
+│           ├── cadastro.feature           🥇 Isabelle
+│           ├── exclusao.feature           🥇 Isabelle
+│           ├── edicao.feature             🥈 Gabriela
+│           ├── listagem.feature           🥈 Gabriela
+│           ├── movimentacao.feature       🥈 Pedro
+│           └── consulta.feature           🥉 Laura
+├── 📁 evidencias/
+│   ├── 📁 isabelle/    (RED · GREEN · REFACTOR · BDD)
+│   ├── 📁 gabriela/   (RED · GREEN · REFACTOR · BDD)
+│   ├── 📁 pedro/  (RED · GREEN · REFACTOR · BDD)
+│   └── 📁 laura/  (RED · GREEN · REFACTOR · BDD)
 ├── pom.xml
 └── README.md
 ```
 
-**Responsabilidade de cada pasta:**
+---
 
-- `model`: contém as classes que representam os dados do sistema.
-- `service`: contém as regras de negócio e a implementação das funcionalidades.
-- `repository`: responsável pelo armazenamento e recuperação dos dados.
-- `tests`: contém os testes unitários desenvolvidos com JUnit.
-- `steps`: contém as implementações dos passos dos cenários Cucumber.
-- `runners`: responsáveis pela execução dos testes BDD.
-- `features`: contém os arquivos `.feature`, escritos em Gherkin.
-- `evidencias`: armazena os prints das etapas do desenvolvimento.
+## 🧾 Modelo de dados
 
-*Observação: a estrutura poderá receber novas classes conforme a necessidade do desenvolvimento, mantendo o padrão de organização.*
+<details>
+<summary><b>📦 Produto</b></summary>
 
-## 6. Características dos produtos
+| Atributo | Descrição |
+|---|---|
+| Código | Identificador único |
+| Nome | Nome do produto |
+| Categoria | Calça, blusa, vestido... |
+| Tamanho | P, M, G, GG |
+| Cor | Cor do produto |
+| Preço | Valor de venda |
+| Quantidade | Quantidade em estoque |
+| Estoque mínimo | Limite para alerta de estoque baixo |
 
-Cada produto cadastrado no sistema deverá possuir os seguintes atributos:
+</details>
 
-| Atributo       | Descrição                                      |
-| -------------- | ---------------------------------------------- |
-| ID             | Identificador único do produto                 |
-| Nome           | Nome do produto                                |
-| Categoria      | Tipo de roupa (calça, blusa, vestido etc.)     |
-| Tamanho        | Tamanho da peça (P, M, G, GG)                  |
-| Cor            | Cor do produto                                 |
-| Preço          | Valor de venda do produto                      |
-| Quantidade     | Quantidade disponível em estoque               |
-| Estoque mínimo | Quantidade mínima para alerta de estoque baixo |
+<details>
+<summary><b>🔁 Movimentação</b></summary>
 
-Também será utilizada uma classe `Movimentacao`, responsável por representar as operações realizadas no estoque.
+| Atributo | Descrição |
+|---|---|
+| Identificador | ID da movimentação |
+| Código do produto | Produto movimentado |
+| Tipo | Entrada ou saída |
+| Quantidade | Quantidade movimentada |
+| Data | Data da movimentação |
 
-Cada movimentação deverá conter:
+</details>
 
-- Identificador da movimentação.
-- Código do produto.
-- Tipo da movimentação (entrada ou saída).
-- Quantidade movimentada.
-- Data da movimentação.
+## 📏 Regras de negócio
 
-## 7. Regras de negócio
+| # | Regra | Quem testa |
+|---|---|:-:|
+| RN01 | Campos obrigatórios preenchidos | Isa |
+| RN02 | Não repetir código de produto | Isa |
+| RN03 | Preço maior que zero | Isa |
+| RN04 | Quantidade inicial não negativa | Isa |
+| RN05 | Saída não pode passar do disponível | Gabi |
+| RN06 | Entrada aumenta a quantidade | Isa |
+| RN07 | Saída diminui a quantidade | Gabi |
+| RN08 | Toda entrada/saída gera histórico | Pedro |
+| RN09 | Consultar produto pelo nome | Laura |
+| RN10 | Identificar estoque ≤ mínimo | Laura |
+| RN11 | Não editar/excluir produto inexistente | Gabi · Isa |
 
-O sistema deverá respeitar as seguintes regras:
+---
 
-1. Todo produto deverá possuir os campos obrigatórios preenchidos.
-2. Não será permitido cadastrar dois produtos com o mesmo código.
-3. O preço deverá ser maior que zero.
-4. A quantidade inicial em estoque não poderá ser negativa.
-5. Não será permitido registrar uma saída maior que a quantidade disponível.
-6. As entradas deverão aumentar a quantidade disponível.
-7. As saídas deverão diminuir a quantidade disponível.
-8. Toda entrada ou saída deverá gerar um registro no histórico de movimentações.
-9. O sistema deverá permitir consultar produtos pelo nome.
-10. O sistema deverá identificar produtos com quantidade menor ou igual ao estoque mínimo.
-11. Não será permitido editar ou excluir um produto inexistente.
-
-## 8. Aplicação do TDD
-
-O desenvolvimento das funcionalidades deverá seguir o ciclo TDD, composto por três etapas:
-
-### RED – Teste falhando
-
-- Criar um teste automatizado antes da implementação.
-- Executar o teste.
-- Verificar que o teste falhou, pois a funcionalidade ainda não foi implementada.
-- Registrar um print da execução.
-
-### GREEN – Teste passando
-
-- Implementar o código necessário para atender ao teste.
-- Executar novamente o teste.
-- Verificar que o resultado foi aprovado.
-- Registrar um print da execução.
-
-### REFACTOR – Refatoração
-
-- Melhorar e organizar o código.
-- Eliminar possíveis repetições.
-- Executar novamente os testes.
-- Verificar se todos continuam passando.
-- Registrar um print da execução.
-
-Cada integrante deverá aplicar o ciclo nas funcionalidades sob sua responsabilidade.
-
-## 9. Aplicação do BDD
-
-Os cenários de comportamento serão escritos utilizando Gherkin, seguindo a estrutura:
-
-- **Dado (Given):** apresenta a situação inicial.
-- **Quando (When):** representa a ação realizada.
-- **Então (Then):** descreve o resultado esperado.
-
-Os cenários deverão contemplar situações positivas e negativas, verificando se o sistema apresenta os comportamentos esperados.
-
-Exemplo:
-
-```gherkin
-Funcionalidade: Cadastro de produtos
-
-Cenário: Cadastrar produto com sucesso
-  Dado que estou no sistema de estoque
-  Quando cadastro um produto com código "001"
-  E informo o nome "Blusa"
-  E informo o tamanho "M"
-  E informo a cor "Preta"
-  E informo o preço "59.90"
-  Então o produto deve ser cadastrado com sucesso
-
-Cenário: Cadastrar produto com código duplicado
-  Dado que já existe um produto com código "001"
-  Quando tento cadastrar outro produto com o mesmo código
-  Então o sistema deve impedir o cadastro
-  E apresentar uma mensagem de erro
-```
-
-Os arquivos `.feature` ficarão na pasta `src/test/resources/features`.
-
-## 10. Organização do GitHub e branches
-
-Para organizar o desenvolvimento em equipe, cada integrante deverá trabalhar em sua própria branch.
-
-| Branch          | Responsável                 |
-| --------------- | --------------------------- |
-| `main`          | Versão principal do projeto |
-| `feature/isa`   | Isa                         |
-| `feature/gabi`  | Gabi                        |
-| `feature/pedro` | Pedro                       |
-| `feature/laura` | Laura                       |
-
-### Fluxo de desenvolvimento
-
-1. Baixar o projeto do GitHub.
-2. Acessar ou criar a branch correspondente ao integrante.
-3. Desenvolver as funcionalidades na própria branch.
-4. Criar e executar os testes JUnit.
-5. Desenvolver e executar os cenários BDD.
-6. Registrar as evidências das etapas RED, GREEN e REFACTOR.
-7. Realizar commits com mensagens que descrevam as alterações.
-8. Enviar as alterações para a própria branch.
-9. Criar um Pull Request para a `main` após finalizar e testar as funcionalidades.
-10. Revisar e integrar as alterações ao projeto principal.
-
-**Importante:** não realizar alterações diretamente na `main`. A integração deverá acontecer somente depois que cada integrante finalizar e testar sua parte na própria branch.
-
-### Exemplos de comandos Git
+## ▶️ Como rodar
 
 ```bash
-# Baixar o projeto
-git clone URL_DO_REPOSITORIO
-
-# Entrar na pasta
-cd SistemaEstoque
-
-# Criar uma branch
-git checkout -b feature/seu-nome
-
-# Adicionar alterações
-git add .
-
-# Criar commit
-git commit -m "Implementa funcionalidade de cadastro"
-
-# Enviar para o GitHub
-git push -u origin feature/seu-nome
+mvn test
 ```
 
-## 11. Evidências e documentação
+No IntelliJ: botão direito em `src/test` → **Run 'All Tests'**.
 
-Cada integrante deverá documentar o desenvolvimento das suas funcionalidades.
+---
 
-As evidências deverão conter:
+## 📸 Evidências
 
-| Etapa    | Evidência necessária                                    |
-| -------- | ------------------------------------------------------- |
-| RED      | Print do teste falhando                                 |
-| GREEN    | Print do teste passando após a implementação            |
-| REFACTOR | Print do código refatorado e dos testes passando        |
-| BDD      | Print dos cenários Gherkin e dos resultados da execução |
+| Etapa | O que mostrar |
+|---|---|
+| 🔴 RED | Print do teste falhando |
+| 🟢 GREEN | Print do teste passando |
+| 🔵 REFACTOR | Print do código refatorado + testes passando |
+| 🥒 BDD | Print do Gherkin + resultado da execução |
 
-Cada imagem deverá possuir uma descrição explicando o que foi realizado e qual resultado foi obtido.
+- Cada imagem precisa de uma **descrição** (o que foi feito e o resultado)
+- Nome sugerido: `funcionalidade_etapa_numero.png` → `cadastro_RED_01.png`
+- Salvar em `evidencias/<nome>/<etapa>/`
 
-As evidências deverão ser organizadas nas pastas individuais dentro de `evidencias/`.
+---
 
-## 12. Entregáveis
+## ✅ Checklist de entrega · 18/11 no AVA
 
-Ao final do projeto, deverão ser entregues:
+- [ ] Escopo aprovado pelo professor
+- [ ] Código-fonte completo
+- [ ] Cenários BDD (`.feature`) positivos e negativos
+- [ ] Testes JUnit
+- [ ] Cenários de limite com `Esquema do Cenário` e técnicas de caixa preta citadas no relatório
+- [ ] Relatório dos passos do TDD (imagem + descrição)
+- [ ] Evidências RED / GREEN / REFACTOR de cada integrante
+- [ ] Evidências dos cenários BDD
+- [ ] Repositório GitHub integrado na `main`
+- [ ] `mvn test` passando na `main`
 
-- Código-fonte completo do sistema.
-- Casos de testes BDD.
-- Testes automatizados desenvolvidos com JUnit.
-- Relatório documentando os passos do TDD.
-- Evidências com imagens e descrições das etapas RED, GREEN e REFACTOR.
-- Evidências da execução dos cenários BDD.
-- Repositório GitHub contendo o projeto integrado.
+---
 
-## 13. Considerações finais
+<div align="center">
 
-O projeto busca aplicar, na prática, os conceitos de Verificação e Validação de Software, permitindo que os integrantes desenvolvam um sistema funcional e compreendam a importância dos testes durante o processo de desenvolvimento.
+**👥 Isabelle · Gabriela · Pedro · Laura**
 
-A divisão das funcionalidades, a utilização de branches individuais e a documentação das evidências têm como objetivo facilitar o trabalho em equipe e garantir que todos participem das etapas de implementação e validação do sistema.
+Feito para a disciplina de Verificação e Validação de Software · PUCPR
+
+</div>
