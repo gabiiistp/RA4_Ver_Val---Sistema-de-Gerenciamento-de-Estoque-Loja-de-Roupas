@@ -34,6 +34,17 @@
 | ☕ **Java** | JDK _preencher versão_ |
 
 ---
+ 
+> [!IMPORTANT]
+> ### 📝 Não esqueçam de preencher o relatório!
+> A entrega inclui o **relatório do processo BDD/TDD** (`Relatorio_BDD_TDD_Sistema_Estoque.docx`). Cada integrante preenche **só a sua seção**, conforme o guia do próprio documento.
+>
+> - 🔗 **Documento compartilhado do grupo:** https://pucpredu-my.sharepoint.com/:w:/r/personal/gabriela_terniovicz_pucpr_edu_br/Documents/Relatorio_BDD_TDD_Sistema_Estoque.docx?d=w8a9c7317499d4f18971218c6ed93d050&csf=1&web=1&e=tV0NGS
+> - 🧑‍💻 Preencham conforme forem terminando cada funcionalidade, e não só no fim (os prints de **RED, GREEN e REFACTOR** precisam ser tirados durante o desenvolvimento).
+> - 📸 Cada print entra **no relatório** e também na sua pasta `evidencias/seu-nome/`, com descrição do que foi feito e do resultado.
+> - 🧹 Antes de entregar: apagar a página de guia e as caixas amarelas "Como preencher".
+ 
+---
 
 ## 🗺️ Quem faz o quê
 
