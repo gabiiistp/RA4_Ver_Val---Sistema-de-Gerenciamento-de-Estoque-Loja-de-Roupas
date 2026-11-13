@@ -57,6 +57,6 @@ public class ProdutoService {
     }
 
     public void excluir(String codigo) {
-        // ainda não implementado (TDD: etapa RED)
+        repository.remover(codigo);
     }
 }
