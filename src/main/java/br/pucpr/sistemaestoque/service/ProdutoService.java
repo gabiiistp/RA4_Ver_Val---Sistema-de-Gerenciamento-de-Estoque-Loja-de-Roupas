@@ -57,6 +57,9 @@ public class ProdutoService {
     }
 
     public void excluir(String codigo) {
+        if (!repository.existe(codigo)) {
+            throw new IllegalArgumentException("Produto não encontrado");
+        }
         repository.remover(codigo);
     }
 }
