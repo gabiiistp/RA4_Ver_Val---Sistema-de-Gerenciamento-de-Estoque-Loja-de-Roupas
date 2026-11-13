@@ -12,6 +12,6 @@ public class ProdutoService {
     }
 
     public void cadastrar(Produto produto) {
-        // ainda não implementado (TDD: etapa RED)
+        repository.salvar(produto);
     }
 }
