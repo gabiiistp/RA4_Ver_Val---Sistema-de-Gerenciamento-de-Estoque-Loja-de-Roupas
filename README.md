@@ -50,8 +50,8 @@
 
 | | Integrante | Funcionalidades | Branch |
 |:-:|---|---|---|
-| 🥇 | **Isa** | Cadastrar · Excluir · Entrada no estoque | `feature/isa` |
-| 🥈 | **Gabi** | Editar · Listar · Saída do estoque | `feature/gabi` |
+| 🥇 | **Isabelle** | Cadastrar · Excluir · Entrada no estoque | `feature/isa` |
+| 🥈 | **Gabriela** | Editar · Listar · Saída do estoque | `feature/gabi` |
 | 🥈 | **Pedro** | Log de entrada · Log de saída | `feature/pedro` |
 | 🥉 | **Laura** | Buscar por nome · Estoque baixo | `feature/laura` |
 
@@ -78,7 +78,7 @@
 
 ## 🧑‍💻 Onde cada um desenvolve
 
-### 🥇 Isa · `feature/isabelle`
+### 🥇 Isabelle · `feature/isabelle`
 
 | Tipo | Arquivo |
 |---|---|
@@ -91,16 +91,16 @@
 | 📸 Evidências | `evidencias/isa/` |
 
 **Passo a passo**
-- [ ] 1. Setup: subir o esqueleto do projeto (já vem com `pom.xml`, pastas e runner do Cucumber) e conferir que `mvn test` roda
-- [ ] 2. `Produto` + `ProdutoRepository` (em memória) → **PR para a main logo**
-- [ ] 3. Cadastrar produto (RN01–RN04)
+- [X] 1. Setup: subir o esqueleto do projeto (já vem com `pom.xml`, pastas e runner do Cucumber) e conferir que `mvn test` roda
+- [X] 2. `Produto` + `ProdutoRepository` (em memória) → **PR para a main logo**
+- [X] 3. Cadastrar produto (RN01–RN04)
 - [ ] 4. Excluir produto (RN11)
 - [ ] 5. Entrada no estoque (RN06) → cria o `EstoqueService`
 - [ ] 6. Evidências RED / GREEN / REFACTOR / BDD
 
 ---
 
-### 🥈 Gabi · `feature/gabriela`
+### 🥈 Gabriela · `feature/gabriela`
 
 | Tipo | Arquivo |
 |---|---|
