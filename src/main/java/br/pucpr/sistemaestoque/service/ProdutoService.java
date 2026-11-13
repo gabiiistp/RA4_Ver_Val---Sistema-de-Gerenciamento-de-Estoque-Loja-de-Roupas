@@ -1,5 +1,17 @@
 package br.pucpr.sistemaestoque.service;
 
+import br.pucpr.sistemaestoque.model.Produto;
+import br.pucpr.sistemaestoque.repository.ProdutoRepository;
+
 public class ProdutoService {
 
+    private final ProdutoRepository repository;
+
+    public ProdutoService(ProdutoRepository repository) {
+        this.repository = repository;
+    }
+
+    public void cadastrar(Produto produto) {
+        // ainda não implementado (TDD: etapa RED)
+    }
 }
