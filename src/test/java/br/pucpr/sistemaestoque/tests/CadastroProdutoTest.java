@@ -5,8 +5,11 @@ import br.pucpr.sistemaestoque.repository.ProdutoRepository;
 import br.pucpr.sistemaestoque.service.ProdutoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -42,5 +45,28 @@ class CadastroProdutoTest {
 
         assertEquals("Já existe um produto com este código", erro.getMessage());
         assertEquals("Blusa", repository.buscarPorCodigo("001").get().getNome());
+    }
+
+    @ParameterizedTest(name = "preço {0} deve ser recusado")
+    @ValueSource(doubles = {-1.0, -0.01, 0.0})
+
+    void naoDeveCadastrarProdutoComPrecoMenorOuIgualAZero(double precoInvalido) {
+        Produto produto = new Produto("002", "Saia", "Saia", "P", "Verde", precoInvalido, 5, 1);
+
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.cadastrar(produto));
+
+        assertEquals("O preço deve ser maior que zero", erro.getMessage());
+        assertFalse(repository.existe("002"));
+    }
+
+    @Test
+    void deveCadastrarProdutoComMenorPrecoValido() {
+        Produto produto = new Produto("003", "Meia", "Meia", "M", "Branca", 0.01, 5, 1);
+
+        service.cadastrar(produto);
+
+        assertTrue(repository.existe("003"));
     }
 }
