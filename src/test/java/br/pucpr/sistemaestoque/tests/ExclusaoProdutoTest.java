@@ -22,9 +22,13 @@ class ExclusaoProdutoTest {
         service = new ProdutoService(repository);
     }
 
+    private void cadastrarBlusa() {
+        service.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+    }
+
     @Test
     void deveExcluirProdutoExistente() {
-        service.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusa();
         assertTrue(repository.existe("001"));
 
         service.excluir("001");
@@ -34,7 +38,7 @@ class ExclusaoProdutoTest {
 
     @Test
     void naoDeveExcluirProdutoQueNuncaFoiCadastrado() {
-        service.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusa();
 
         IllegalArgumentException erro = assertThrows(
                 IllegalArgumentException.class,
@@ -46,7 +50,7 @@ class ExclusaoProdutoTest {
 
     @Test
     void naoDeveExcluirProdutoQueJaFoiExcluido() {
-        service.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusa();
         service.excluir("001");
 
         IllegalArgumentException erro = assertThrows(

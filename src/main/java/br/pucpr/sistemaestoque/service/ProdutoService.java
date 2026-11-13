@@ -9,6 +9,7 @@ public class ProdutoService {
     private static final String MSG_PRECO_INVALIDO = "O preço deve ser maior que zero";
     private static final String MSG_QUANTIDADE_NEGATIVA = "A quantidade inicial não pode ser negativa";
     private static final String MSG_CODIGO_DUPLICADO = "Já existe um produto com este código";
+    private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto não encontrado";
 
     private final ProdutoRepository repository;
 
@@ -57,9 +58,14 @@ public class ProdutoService {
     }
 
     public void excluir(String codigo) {
-        if (!repository.existe(codigo)) {
-            throw new IllegalArgumentException("Produto não encontrado");
-        }
+        validarProdutoExistente(codigo);
         repository.remover(codigo);
+    }
+
+    // Reutilizável: o editar da Gabi (RN11) pode chamar este mesmo método
+    private void validarProdutoExistente(String codigo) {
+        if (!repository.existe(codigo)) {
+            throw new IllegalArgumentException(MSG_PRODUTO_NAO_ENCONTRADO);
+        }
     }
 }
