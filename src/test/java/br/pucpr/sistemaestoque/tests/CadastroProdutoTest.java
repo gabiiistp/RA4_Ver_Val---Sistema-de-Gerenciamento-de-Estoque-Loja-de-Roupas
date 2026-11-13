@@ -6,7 +6,11 @@ import br.pucpr.sistemaestoque.service.ProdutoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -91,5 +95,29 @@ class CadastroProdutoTest {
 
         assertTrue(repository.existe("005"));
         assertEquals(quantidadeValida, repository.buscarPorCodigo("005").get().getQuantidade());
+    }
+
+    static Stream<Arguments> produtosComCampoObrigatorioInvalido() {
+        return Stream.of(
+                Arguments.of("código vazio", new Produto("", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2)),
+                Arguments.of("código nulo", new Produto(null, "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2)),
+                Arguments.of("nome vazio", new Produto("006", "", "Blusa", "M", "Preta", 59.90, 10, 2)),
+                Arguments.of("nome só com espaços", new Produto("006", "   ", "Blusa", "M", "Preta", 59.90, 10, 2)),
+                Arguments.of("categoria vazia", new Produto("006", "Blusa", "", "M", "Preta", 59.90, 10, 2)),
+                Arguments.of("tamanho vazio", new Produto("006", "Blusa", "Blusa", "", "Preta", 59.90, 10, 2)),
+                Arguments.of("cor vazia", new Produto("006", "Blusa", "Blusa", "M", "", 59.90, 10, 2)),
+                Arguments.of("cor nula", new Produto("006", "Blusa", "Blusa", "M", null, 59.90, 10, 2))
+        );
+    }
+
+    @ParameterizedTest(name = "{0} deve ser recusado")
+    @MethodSource("produtosComCampoObrigatorioInvalido")
+    void naoDeveCadastrarProdutoComCampoObrigatorioInvalido(String descricao, Produto produto) {
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.cadastrar(produto));
+
+        assertEquals("Todos os campos obrigatórios devem ser preenchidos", erro.getMessage());
+        assertTrue(repository.listarTodos().isEmpty());
     }
 }
