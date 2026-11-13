@@ -12,6 +12,9 @@ public class ProdutoService {
     }
 
     public void cadastrar(Produto produto) {
+        if (produto.getPreco() <= 0) {
+            throw new IllegalArgumentException("O preço deve ser maior que zero");
+        }
         if (repository.existe(produto.getCodigo())) {
             throw new IllegalArgumentException("Já existe um produto com este código");
         }
