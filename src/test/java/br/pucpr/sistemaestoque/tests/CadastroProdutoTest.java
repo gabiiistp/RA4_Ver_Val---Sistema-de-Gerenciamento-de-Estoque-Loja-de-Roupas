@@ -49,7 +49,6 @@ class CadastroProdutoTest {
 
     @ParameterizedTest(name = "preço {0} deve ser recusado")
     @ValueSource(doubles = {-1.0, -0.01, 0.0})
-
     void naoDeveCadastrarProdutoComPrecoMenorOuIgualAZero(double precoInvalido) {
         Produto produto = new Produto("002", "Saia", "Saia", "P", "Verde", precoInvalido, 5, 1);
 
@@ -68,5 +67,29 @@ class CadastroProdutoTest {
         service.cadastrar(produto);
 
         assertTrue(repository.existe("003"));
+    }
+
+    @ParameterizedTest(name = "quantidade {0} deve ser recusada")
+    @ValueSource(ints = {-10, -1})
+    void naoDeveCadastrarProdutoComQuantidadeNegativa(int quantidadeInvalida) {
+        Produto produto = new Produto("004", "Short", "Short", "M", "Azul", 49.90, quantidadeInvalida, 1);
+
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.cadastrar(produto));
+
+        assertEquals("A quantidade inicial não pode ser negativa", erro.getMessage());
+        assertFalse(repository.existe("004"));
+    }
+
+    @ParameterizedTest(name = "quantidade {0} deve ser aceita")
+    @ValueSource(ints = {0, 1})
+    void deveCadastrarProdutoComQuantidadeZeroOuPositiva(int quantidadeValida) {
+        Produto produto = new Produto("005", "Boné", "Acessório", "M", "Preto", 39.90, quantidadeValida, 1);
+
+        service.cadastrar(produto);
+
+        assertTrue(repository.existe("005"));
+        assertEquals(quantidadeValida, repository.buscarPorCodigo("005").get().getQuantidade());
     }
 }
