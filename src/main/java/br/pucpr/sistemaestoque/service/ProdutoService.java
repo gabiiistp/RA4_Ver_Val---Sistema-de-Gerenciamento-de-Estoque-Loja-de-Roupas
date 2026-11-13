@@ -12,6 +12,13 @@ public class ProdutoService {
     }
 
     public void cadastrar(Produto produto) {
+        if (estaVazio(produto.getCodigo())
+                || estaVazio(produto.getNome())
+                || estaVazio(produto.getCategoria())
+                || estaVazio(produto.getTamanho())
+                || estaVazio(produto.getCor())) {
+            throw new IllegalArgumentException("Todos os campos obrigatórios devem ser preenchidos");
+        }
         if (produto.getPreco() <= 0) {
             throw new IllegalArgumentException("O preço deve ser maior que zero");
         }
@@ -22,5 +29,9 @@ public class ProdutoService {
             throw new IllegalArgumentException("Já existe um produto com este código");
         }
         repository.salvar(produto);
+    }
+
+    private boolean estaVazio(String texto) {
+        return texto == null || texto.isBlank();
     }
 }
