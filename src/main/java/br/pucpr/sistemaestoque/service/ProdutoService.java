@@ -12,6 +12,9 @@ public class ProdutoService {
     }
 
     public void cadastrar(Produto produto) {
+        if (repository.existe(produto.getCodigo())) {
+            throw new IllegalArgumentException("Já existe um produto com este código");
+        }
         repository.salvar(produto);
     }
 }
