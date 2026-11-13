@@ -55,4 +55,8 @@ public class ProdutoService {
     private boolean estaVazio(String texto) {
         return texto == null || texto.isBlank();
     }
+
+    public void excluir(String codigo) {
+        // ainda não implementado (TDD: etapa RED)
+    }
 }
