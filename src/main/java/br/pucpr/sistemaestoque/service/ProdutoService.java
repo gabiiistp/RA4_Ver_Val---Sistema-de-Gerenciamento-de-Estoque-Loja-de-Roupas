@@ -15,6 +15,9 @@ public class ProdutoService {
         if (produto.getPreco() <= 0) {
             throw new IllegalArgumentException("O preço deve ser maior que zero");
         }
+        if (produto.getQuantidade() < 0) {
+            throw new IllegalArgumentException("A quantidade inicial não pode ser negativa");
+        }
         if (repository.existe(produto.getCodigo())) {
             throw new IllegalArgumentException("Já existe um produto com este código");
         }
