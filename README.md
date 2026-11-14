@@ -369,6 +369,26 @@ SistemaEstoque/
 | RN11 | Não editar/excluir produto inexistente | Gabi · Isa |
 
 ---
+✅ Atualização na main (PR da Isa)
+
+Entraram: cadastrar e excluir (TDD + BDD), EstoqueService e o ContextoSistema dos steps.
+
+*Façam:* Git → Pull na main e depois "Merge origin/main into" na sua branch. O pom.xml mudou (PicoContainer), então recarreguem o Maven.
+
+📌 *Como escrever os steps (modelo: CadastroSteps e ExclusaoSteps)*
+1. Na sua classe de steps, no lugar de criar repository/service próprios:
+   private final ContextoSistema contexto;
+   public SuaClasseSteps(ContextoSistema contexto) { this.contexto = contexto; }
+2. Use contexto.produtoService, contexto.estoqueService, contexto.repository
+3. Para o resultado (sucesso/erro): contexto.tentar(() -> ..., "mensagem de sucesso") e confira com contexto.resultado
+4. Pedro e Laura: acrescentem o seu service no ContextoSistema (uma linha cada)
+5. A frase de um passo NÃO pode repetir em outra classe (dá "DuplicateStepDefinition")
+
+*Padrão de erro:* IllegalArgumentException com mensagem. Para produto inexistente: "Produto não encontrado" (existe o método validarProdutoExistente no ProdutoService).
+
+*EstoqueService:* registrarEntrada (Isa) e registrarSaida (Gabi), cada um implementa só o seu.
+
+---
 
 ## ▶️ Como rodar
 
