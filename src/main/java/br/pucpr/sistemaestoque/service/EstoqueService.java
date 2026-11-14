@@ -15,7 +15,8 @@ public class EstoqueService {
     // ENTRADA NO ESTOQUE  ·  responsável: Isa
     // ============================================================
     public void registrarEntrada(String codigo, int quantidade) {
-        Produto produto = repository.buscarPorCodigo(codigo).get();
+        Produto produto = repository.buscarPorCodigo(codigo)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
         produto.setQuantidade(produto.getQuantidade() + quantidade);
     }
 
