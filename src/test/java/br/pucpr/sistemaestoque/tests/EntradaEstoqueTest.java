@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EntradaEstoqueTest {
 
@@ -29,5 +30,29 @@ class EntradaEstoqueTest {
         estoqueService.registrarEntrada("001", 5);
 
         assertEquals(15, repository.buscarPorCodigo("001").get().getQuantidade());
+    }
+
+    @Test
+    void naoDeveRegistrarEntradaParaProdutoQueNuncaFoiCadastrado() {
+        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> estoqueService.registrarEntrada("999", 5));
+
+        assertEquals("Produto não encontrado", erro.getMessage());
+        assertEquals(10, repository.buscarPorCodigo("001").get().getQuantidade());
+    }
+
+    @Test
+    void naoDeveRegistrarEntradaParaProdutoJaExcluido() {
+        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        produtoService.excluir("001");
+
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> estoqueService.registrarEntrada("001", 5));
+
+        assertEquals("Produto não encontrado", erro.getMessage());
     }
 }
