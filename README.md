@@ -50,8 +50,8 @@
 
 | | Integrante | Funcionalidades | Branch |
 |:-:|---|---|---|
-| 🥇 | **Isa** | Cadastrar · Excluir · Entrada no estoque | `feature/isa` |
-| 🥈 | **Gabi** | Editar · Listar · Saída do estoque | `feature/gabi` |
+| 🥇 | **Isabelle** | Cadastrar · Excluir · Entrada no estoque | `feature/isa` |
+| 🥈 | **Gabriela** | Editar · Listar · Saída do estoque | `feature/gabi` |
 | 🥈 | **Pedro** | Log de entrada · Log de saída | `feature/pedro` |
 | 🥉 | **Laura** | Buscar por nome · Estoque baixo | `feature/laura` |
 
@@ -78,7 +78,7 @@
 
 ## 🧑‍💻 Onde cada um desenvolve
 
-### 🥇 Isa · `feature/isabelle`
+### 🥇 Isabelle · `feature/isabelle`
 
 | Tipo | Arquivo |
 |---|---|
@@ -91,16 +91,16 @@
 | 📸 Evidências | `evidencias/isa/` |
 
 **Passo a passo**
-- [ ] 1. Setup: subir o esqueleto do projeto (já vem com `pom.xml`, pastas e runner do Cucumber) e conferir que `mvn test` roda
-- [ ] 2. `Produto` + `ProdutoRepository` (em memória) → **PR para a main logo**
-- [ ] 3. Cadastrar produto (RN01–RN04)
+- [X] 1. Setup: subir o esqueleto do projeto (já vem com `pom.xml`, pastas e runner do Cucumber) e conferir que `mvn test` roda
+- [X] 2. `Produto` + `ProdutoRepository` (em memória) → **PR para a main logo**
+- [X] 3. Cadastrar produto (RN01–RN04)
 - [ ] 4. Excluir produto (RN11)
 - [ ] 5. Entrada no estoque (RN06) → cria o `EstoqueService`
 - [ ] 6. Evidências RED / GREEN / REFACTOR / BDD
 
 ---
 
-### 🥈 Gabi · `feature/gabriela`
+### 🥈 Gabriela · `feature/gabriela`
 
 | Tipo | Arquivo |
 |---|---|
@@ -367,6 +367,26 @@ SistemaEstoque/
 | RN09 | Consultar produto pelo nome | Laura |
 | RN10 | Identificar estoque ≤ mínimo | Laura |
 | RN11 | Não editar/excluir produto inexistente | Gabi · Isa |
+
+---
+✅ Atualização na main (PR da Isa)
+
+Entraram: cadastrar e excluir (TDD + BDD), EstoqueService e o ContextoSistema dos steps.
+
+*Façam:* Git → Pull na main e depois "Merge origin/main into" na sua branch. O pom.xml mudou (PicoContainer), então recarreguem o Maven.
+
+📌 *Como escrever os steps (modelo: CadastroSteps e ExclusaoSteps)*
+1. Na sua classe de steps, no lugar de criar repository/service próprios:
+   private final ContextoSistema contexto;
+   public SuaClasseSteps(ContextoSistema contexto) { this.contexto = contexto; }
+2. Use contexto.produtoService, contexto.estoqueService, contexto.repository
+3. Para o resultado (sucesso/erro): contexto.tentar(() -> ..., "mensagem de sucesso") e confira com contexto.resultado
+4. Pedro e Laura: acrescentem o seu service no ContextoSistema (uma linha cada)
+5. A frase de um passo NÃO pode repetir em outra classe (dá "DuplicateStepDefinition")
+
+*Padrão de erro:* IllegalArgumentException com mensagem. Para produto inexistente: "Produto não encontrado" (existe o método validarProdutoExistente no ProdutoService).
+
+*EstoqueService:* registrarEntrada (Isa) e registrarSaida (Gabi), cada um implementa só o seu.
 
 ---
 
