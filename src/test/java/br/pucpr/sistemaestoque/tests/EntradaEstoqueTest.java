@@ -25,30 +25,38 @@ class EntradaEstoqueTest {
         estoqueService = new EstoqueService(repository);
     }
 
+    private void cadastrarBlusaCom10Unidades() {
+        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+    }
+
+    private int quantidadeDaBlusa() {
+        return repository.buscarPorCodigo("001").get().getQuantidade();
+    }
+
     @Test
     void deveAumentarAQuantidadeDoProdutoNaEntrada() {
-        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusaCom10Unidades();
 
         estoqueService.registrarEntrada("001", 5);
 
-        assertEquals(15, repository.buscarPorCodigo("001").get().getQuantidade());
+        assertEquals(15, quantidadeDaBlusa());
     }
 
     @Test
     void naoDeveRegistrarEntradaParaProdutoQueNuncaFoiCadastrado() {
-        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusaCom10Unidades();
 
         IllegalArgumentException erro = assertThrows(
                 IllegalArgumentException.class,
                 () -> estoqueService.registrarEntrada("999", 5));
 
         assertEquals("Produto não encontrado", erro.getMessage());
-        assertEquals(10, repository.buscarPorCodigo("001").get().getQuantidade());
+        assertEquals(10, quantidadeDaBlusa());
     }
 
     @Test
     void naoDeveRegistrarEntradaParaProdutoJaExcluido() {
-        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusaCom10Unidades();
         produtoService.excluir("001");
 
         IllegalArgumentException erro = assertThrows(
@@ -61,22 +69,22 @@ class EntradaEstoqueTest {
     @ParameterizedTest(name = "entrada de {0} unidades deve ser recusada")
     @ValueSource(ints = {-10, -1, 0})
     void naoDeveRegistrarEntradaComQuantidadeMenorOuIgualAZero(int quantidadeInvalida) {
-        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusaCom10Unidades();
 
         IllegalArgumentException erro = assertThrows(
                 IllegalArgumentException.class,
                 () -> estoqueService.registrarEntrada("001", quantidadeInvalida));
 
         assertEquals("A quantidade da entrada deve ser maior que zero", erro.getMessage());
-        assertEquals(10, repository.buscarPorCodigo("001").get().getQuantidade());
+        assertEquals(10, quantidadeDaBlusa());
     }
 
     @Test
     void deveRegistrarEntradaComAMenorQuantidadeValida() {
-        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        cadastrarBlusaCom10Unidades();
 
         estoqueService.registrarEntrada("001", 1);
 
-        assertEquals(11, repository.buscarPorCodigo("001").get().getQuantidade());
+        assertEquals(11, quantidadeDaBlusa());
     }
 }
