@@ -26,15 +26,30 @@ public class ConsultaService {
     // RN09 · BUSCAR PELO NOME
     // ============================================================
     public List<Produto> buscarPorNome(String nome) {
-        // a implementar (TDD: RED)
-        return new ArrayList<>();
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("O nome para busca não pode estar vazio");
+        }
+
+        String procurado = nome.trim().toLowerCase();
+        List<Produto> encontrados = new ArrayList<>();
+        for (Produto produto : repository.listarTodos()) {
+            if (produto.getNome().toLowerCase().contains(procurado)) {
+                encontrados.add(produto);
+            }
+        }
+        return encontrados;
     }
 
     // ============================================================
     // RN10 · ESTOQUE BAIXO (quantidade <= estoque mínimo)
     // ============================================================
     public List<Produto> listarEstoqueBaixo() {
-        // a implementar (TDD: RED)
-        return new ArrayList<>();
+        List<Produto> baixo = new ArrayList<>();
+        for (Produto produto : repository.listarTodos()) {
+            if (produto.getQuantidade() <= produto.getEstoqueMinimo()) {
+                baixo.add(produto);
+            }
+        }
+        return baixo;
     }
 }
