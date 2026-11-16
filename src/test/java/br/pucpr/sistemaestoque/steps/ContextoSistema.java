@@ -1,6 +1,7 @@
 package br.pucpr.sistemaestoque.steps;
 
 import br.pucpr.sistemaestoque.repository.ProdutoRepository;
+import br.pucpr.sistemaestoque.service.ConsultaService;
 import br.pucpr.sistemaestoque.service.EstoqueService;
 import br.pucpr.sistemaestoque.service.ProdutoService;
 
@@ -17,7 +18,7 @@ public class ContextoSistema {
     public final ProdutoService produtoService = new ProdutoService(repository);
     public final EstoqueService estoqueService = new EstoqueService(repository);
     // Pedro: acrescentar aqui o MovimentacaoService
-    // Laura: acrescentar aqui o ConsultaService
+    public final ConsultaService consultaService = new ConsultaService(repository);
 
     /** Mensagem do último resultado (de sucesso ou do erro lançado) */
     public String resultado;
