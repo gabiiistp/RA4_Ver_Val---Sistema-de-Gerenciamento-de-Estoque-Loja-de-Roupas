@@ -71,6 +71,7 @@ public class ProdutoService {
     }
 
     public void editar(Produto dados) {
+        validarProdutoExistente(dados.getCodigo());
     }
 
     private void validarDadosDaEdicao(Produto dados) {
