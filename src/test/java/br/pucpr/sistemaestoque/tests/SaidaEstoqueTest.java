@@ -13,7 +13,6 @@ public class SaidaEstoqueTest {
 
     private static final String MSG_NAO_ENCONTRADO = "Produto não encontrado";
     private static final String MSG_ESTOQUE_INSUFICIENTE = "Estoque insuficiente para a saída";
-    private static final String MSG_QUANTIDADE_INVALIDA = "A quantidade da saída deve ser maior que zero";
 
     private ProdutoRepository repository;
     private ProdutoService produtoService;
@@ -27,17 +26,60 @@ public class SaidaEstoqueTest {
     }
 
     private void cadastrarBlusaCom10Unidades() {
-        produtoService.cadastrar(new Produto("001", "Blusa", "Blusa", "M", "Preta", 59.90, 10, 2));
+        produtoService.cadastrar(
+                new Produto("001", "Blusa", "Blusa", "M", "Preta",
+                        59.90, 10, 2)
+        );
     }
 
     private int quantidadeDaBlusa() {
         return repository.buscarPorCodigo("001").get().getQuantidade();
     }
 
-    private IllegalArgumentException saidaRecusada(String codigo, int quantidade) {
-        return assertThrows(IllegalArgumentException.class,
-                () -> estoqueService.registrarSaida(codigo, quantidade));
+    private IllegalArgumentException saidaRecusada(
+            String codigo, int quantidade) {
+
+        return assertThrows(
+                IllegalArgumentException.class,
+                () -> estoqueService.registrarSaida(codigo, quantidade)
+        );
     }
+
+    // Testes de produto inexistente e excluído
+
+    @Test
+    void naoDeveRegistrarSaidaParaProdutoQueNuncaFoiCadastrado() {
+        cadastrarBlusaCom10Unidades();
+
+        IllegalArgumentException erro = saidaRecusada("999", 5);
+
+        assertEquals(MSG_NAO_ENCONTRADO, erro.getMessage());
+        assertEquals(10, quantidadeDaBlusa());
+    }
+
+    @Test
+    void naoDeveRegistrarSaidaParaProdutoJaExcluido() {
+        cadastrarBlusaCom10Unidades();
+        produtoService.excluir("001");
+
+        IllegalArgumentException erro = saidaRecusada("001", 5);
+
+        assertEquals(MSG_NAO_ENCONTRADO, erro.getMessage());
+    }
+
+    // Teste de diminuição da quantidade
+
+    @Test
+    void deveDiminuirAQuantidadeDoProdutoNaSaida() {
+        cadastrarBlusaCom10Unidades();
+
+        estoqueService.registrarSaida("001", 3);
+
+        assertEquals(7, quantidadeDaBlusa());
+    }
+
+    // Testes da RN05 - limite do estoque disponível
+
     @Test
     void naoDevePermitirSaidaDe11QuandoExistem10Unidades() {
         cadastrarBlusaCom10Unidades();
@@ -68,5 +110,14 @@ public class SaidaEstoqueTest {
 
         assertEquals(MSG_ESTOQUE_INSUFICIENTE, erro.getMessage());
         assertEquals(4, quantidadeDaBlusa());
+    }
+
+    @Test
+    void devePermitirSaidaIgualAoEstoqueDisponivel() {
+        cadastrarBlusaCom10Unidades();
+
+        estoqueService.registrarSaida("001", 10);
+
+        assertEquals(0, quantidadeDaBlusa());
     }
 }

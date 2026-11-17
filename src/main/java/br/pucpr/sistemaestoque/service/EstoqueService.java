@@ -36,7 +36,16 @@ public class EstoqueService {
     // ============================================================
     public void registrarSaida(String codigo, int quantidade) {
         Produto produto = buscarProdutoOuFalhar(codigo);
-        produto.setQuantidade(produto.getQuantidade() - quantidade);
+
+        if (quantidade > produto.getQuantidade()) {
+            throw new IllegalArgumentException(
+                    "Estoque insuficiente para a saída"
+            );
+        }
+
+        produto.setQuantidade(
+                produto.getQuantidade() - quantidade
+        );
     }
 
     private void validarQuantidadeDaSaida(int quantidade) {
