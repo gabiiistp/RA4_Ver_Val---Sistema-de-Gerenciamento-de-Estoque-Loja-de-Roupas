@@ -35,6 +35,13 @@ public class EstoqueService {
     // SAÍDA DO ESTOQUE  ·  responsável: Gabi
     // ============================================================
     public void registrarSaida(String codigo, int quantidade) {
+
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException(
+                    "A quantidade da saída deve ser maior que zero"
+            );
+        }
+
         Produto produto = buscarProdutoOuFalhar(codigo);
 
         if (quantidade > produto.getQuantidade()) {

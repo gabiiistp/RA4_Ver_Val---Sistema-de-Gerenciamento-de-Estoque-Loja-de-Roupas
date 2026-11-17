@@ -80,6 +80,15 @@ public class SaidaEstoqueTest {
     }
 
     @Test
+    void deveRegistrarSaidaComAMenorQuantidadeValida() {
+        cadastrarBlusaCom10Unidades();
+
+        estoqueService.registrarSaida("001", 1);
+
+        assertEquals(9, quantidadeDaBlusa());
+    }
+
+    @Test
     void naoDeveRegistrarSaidaParaProdutoJaExcluido() {
         cadastrarBlusaCom10Unidades();
         produtoService.excluir("001");
