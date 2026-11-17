@@ -39,29 +39,34 @@ public class SaidaEstoqueTest {
                 () -> estoqueService.registrarSaida(codigo, quantidade));
     }
     @Test
-    void naoDeveRegistrarSaidaParaProdutoQueNuncaFoiCadastrado() {
+    void naoDevePermitirSaidaDe11QuandoExistem10Unidades() {
         cadastrarBlusaCom10Unidades();
 
-        IllegalArgumentException erro = saidaRecusada("999", 5);
+        IllegalArgumentException erro = saidaRecusada("001", 11);
 
-        assertEquals(MSG_NAO_ENCONTRADO, erro.getMessage());
+        assertEquals(MSG_ESTOQUE_INSUFICIENTE, erro.getMessage());
         assertEquals(10, quantidadeDaBlusa());
     }
+
     @Test
-    void naoDeveRegistrarSaidaParaProdutoJaExcluido() {
+    void naoDevePermitirSaidaDe100QuandoExistem10Unidades() {
         cadastrarBlusaCom10Unidades();
-        produtoService.excluir("001");
+
+        IllegalArgumentException erro = saidaRecusada("001", 100);
+
+        assertEquals(MSG_ESTOQUE_INSUFICIENTE, erro.getMessage());
+        assertEquals(10, quantidadeDaBlusa());
+    }
+
+    @Test
+    void naoDevePermitirSegundaSaidaMaiorQueOEstoqueRestante() {
+        cadastrarBlusaCom10Unidades();
+
+        estoqueService.registrarSaida("001", 6);
 
         IllegalArgumentException erro = saidaRecusada("001", 5);
 
-        assertEquals(MSG_NAO_ENCONTRADO, erro.getMessage());
-    }
-    @Test
-    void deveDiminuirAQuantidadeDoProdutoNaSaida() {
-        cadastrarBlusaCom10Unidades();
-
-        estoqueService.registrarSaida("001", 3);
-
-        assertEquals(7, quantidadeDaBlusa());
+        assertEquals(MSG_ESTOQUE_INSUFICIENTE, erro.getMessage());
+        assertEquals(4, quantidadeDaBlusa());
     }
 }
