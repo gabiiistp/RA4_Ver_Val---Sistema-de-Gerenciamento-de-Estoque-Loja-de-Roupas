@@ -3,6 +3,8 @@ package br.pucpr.sistemaestoque.service;
 import br.pucpr.sistemaestoque.model.Produto;
 import br.pucpr.sistemaestoque.repository.ProdutoRepository;
 
+import java.util.List;
+
 public class ProdutoService {
 
     private static final String MSG_CAMPOS_OBRIGATORIOS = "Todos os campos obrigatórios devem ser preenchidos";
@@ -62,10 +64,30 @@ public class ProdutoService {
         repository.remover(codigo);
     }
 
-    // Reutilizável: o editar da Gabi (RN11) pode chamar este mesmo método
     private void validarProdutoExistente(String codigo) {
         if (!repository.existe(codigo)) {
             throw new IllegalArgumentException(MSG_PRODUTO_NAO_ENCONTRADO);
         }
+    }
+
+    public void editar(Produto dados) {
+    }
+
+    private void validarDadosDaEdicao(Produto dados) {
+        validarCamposObrigatorios(dados);
+        validarPreco(dados);
+    }
+
+    private void copiarDadosEditaveis(Produto origem, Produto destino) {
+        destino.setNome(origem.getNome());
+        destino.setCategoria(origem.getCategoria());
+        destino.setTamanho(origem.getTamanho());
+        destino.setCor(origem.getCor());
+        destino.setPreco(origem.getPreco());
+        destino.setEstoqueMinimo(origem.getEstoqueMinimo());
+    }
+
+    public List<Produto> listar() {
+        return repository.listarTodos();
     }
 }
