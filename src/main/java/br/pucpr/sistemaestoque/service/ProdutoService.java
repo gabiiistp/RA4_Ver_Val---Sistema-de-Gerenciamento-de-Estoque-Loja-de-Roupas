@@ -72,19 +72,28 @@ public class ProdutoService {
 
     public void editar(Produto dados) {
         validarProdutoExistente(dados.getCodigo());
-        validarCamposObrigatorios(dados);
-        validarPreco(dados);
+        validarDadosDaEdicao(dados);
 
         Produto produto = repository.buscarPorCodigo(
                 dados.getCodigo()
         ).get();
 
-        produto.setNome(dados.getNome());
-        produto.setCategoria(dados.getCategoria());
-        produto.setTamanho(dados.getTamanho());
-        produto.setCor(dados.getCor());
-        produto.setPreco(dados.getPreco());
-        produto.setEstoqueMinimo(dados.getEstoqueMinimo());
+        copiarDadosEditaveis(dados, produto);
+        }
+
+        private void validarDadosDaEdicao(Produto dados) {
+            validarCamposObrigatorios(dados);
+            validarPreco(dados);
+        }
+        private void copiarDadosEditaveis(
+            Produto origem, Produto destino
+        ) {
+            destino.setNome(origem.getNome());
+            destino.setCategoria(origem.getCategoria());
+            destino.setTamanho(origem.getTamanho());
+            destino.setCor(origem.getCor());
+            destino.setPreco(origem.getPreco());
+            destino.setEstoqueMinimo(origem.getEstoqueMinimo());
     }
 
     public List<Produto> listar() {

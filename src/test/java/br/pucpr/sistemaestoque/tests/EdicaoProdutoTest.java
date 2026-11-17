@@ -177,4 +177,22 @@ class EdicaoProdutoTest {
         );
     }
 
+    @Test
+    void naoDeveEditarProdutoComNomeNulo() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                null, "Blusa", "G", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+
 }
