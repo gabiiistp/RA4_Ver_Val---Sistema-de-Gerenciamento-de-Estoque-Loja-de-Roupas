@@ -7,6 +7,8 @@ public class EstoqueService {
 
     private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto não encontrado";
     private static final String MSG_QUANTIDADE_ENTRADA_INVALIDA = "A quantidade da entrada deve ser maior que zero";
+    private static final String MSG_QUANTIDADE_SAIDA_INVALIDA = "A quantidade da saída deve ser maior que zero";
+    private static final String MSG_ESTOQUE_INSUFICIENTE = "Estoque insuficiente para a saída";
 
     private final ProdutoRepository repository;
 
@@ -33,7 +35,33 @@ public class EstoqueService {
     // SAÍDA DO ESTOQUE  ·  responsável: Gabi
     // ============================================================
     public void registrarSaida(String codigo, int quantidade) {
-        // a implementar (TDD: Gabi)
+        validarQuantidadeDaSaida(quantidade);
+
+        Produto produto = buscarProdutoOuFalhar(codigo);
+
+        validarEstoqueSuficiente(produto, quantidade);
+
+        produto.setQuantidade(
+                produto.getQuantidade() - quantidade
+        );
+    }
+
+    private void validarQuantidadeDaSaida(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException(
+                    "A quantidade da saída deve ser maior que zero"
+            );
+        }
+    }
+
+    private void validarEstoqueSuficiente(
+            Produto produto, int quantidade
+    ) {
+        if (quantidade > produto.getQuantidade()) {
+            throw new IllegalArgumentException(
+                    "Estoque insuficiente para a saída"
+            );
+        }
     }
 
     // ============================================================

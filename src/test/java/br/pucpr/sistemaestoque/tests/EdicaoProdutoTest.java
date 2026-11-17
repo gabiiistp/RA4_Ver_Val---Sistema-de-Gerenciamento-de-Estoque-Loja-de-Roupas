@@ -58,14 +58,141 @@ class EdicaoProdutoTest {
     }
 
     @Test
-    void naoDeveEditarProdutoJaExcluido() {
+    void naoDeveEditarProdutoQueFoiExcluido() {
         cadastrarBlusa();
+
         service.excluir("001");
 
-        IllegalArgumentException erro = editarEEsperarErro(
-                dadosDaBlusa("Saia", "Saia", "P", "Verde", 89.90)
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G",
+                "Azul", 79.90
         );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
 
         assertEquals(MSG_NAO_ENCONTRADO, erro.getMessage());
     }
+
+    @Test
+    void naoDeveEditarProdutoComCampoObrigatorioVazio() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "", "Blusa", "G", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-1.0, -0.01, 0.0})
+    void naoDeveEditarProdutoComPrecoMenorOuIgualAZero(double preco) {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G", "Azul", preco
+        );
+
+        IllegalArgumentException erro = editarEEsperarErro(dados);
+
+        assertEquals(MSG_PRECO_INVALIDO, erro.getMessage());
+    }
+
+    @Test
+    void deveAlterarOsDadosDoProdutoExistente() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G",
+                "Azul", 79.90
+        );
+
+        service.editar(dados);
+
+        Produto atualizado = blusaCadastrada();
+
+        assertEquals("Blusa Floral", atualizado.getNome());
+        assertEquals("G", atualizado.getTamanho());
+        assertEquals("Azul", atualizado.getCor());
+        assertEquals(79.90, atualizado.getPreco());
+        assertEquals(4, atualizado.getEstoqueMinimo());
+        assertEquals(10, atualizado.getQuantidade());
+    }
+
+    @Test
+    void naoDeveEditarProdutoComCategoriaVazia() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "", "G", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+    @Test
+    void naoDeveEditarProdutoComTamanhoVazio() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+    @Test
+    void naoDeveEditarProdutoComCorVazia() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G", "", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+    @Test
+    void naoDeveEditarProdutoComNomeNulo() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                null, "Blusa", "G", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+
 }
