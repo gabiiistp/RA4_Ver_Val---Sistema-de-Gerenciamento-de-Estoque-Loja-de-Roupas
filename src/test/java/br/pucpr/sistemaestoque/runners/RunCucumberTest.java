@@ -1,3 +1,4 @@
+
 package br.pucpr.sistemaestoque.runners;
 
 import org.junit.platform.suite.api.ConfigurationParameter;
@@ -10,8 +11,14 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "br.pucpr.sistemaestoque.steps")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-report.html")
+@SelectClasspathResource("features/edicao.feature")
+@ConfigurationParameter(
+        key = GLUE_PROPERTY_NAME,
+        value = "br.pucpr.sistemaestoque.steps"
+)
+@ConfigurationParameter(
+        key = PLUGIN_PROPERTY_NAME,
+        value = "pretty, html:target/cucumber-report.html"
+)
 public class RunCucumberTest {
 }
