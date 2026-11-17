@@ -97,6 +97,6 @@ public class ProdutoService {
     }
 
     public List<Produto> listar() {
-        return repository.listarTodos();
-    }
+            return repository.listarTodos();
+        }
 }

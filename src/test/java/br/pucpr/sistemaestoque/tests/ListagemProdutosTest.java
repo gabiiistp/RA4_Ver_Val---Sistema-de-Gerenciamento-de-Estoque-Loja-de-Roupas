@@ -1,17 +1,12 @@
-
 package br.pucpr.sistemaestoque.tests;
 
 import br.pucpr.sistemaestoque.model.Produto;
 import br.pucpr.sistemaestoque.repository.ProdutoRepository;
 import br.pucpr.sistemaestoque.service.ProdutoService;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
-
+import org.junit.jupiter.api.Test;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ListagemProdutosTest {
 
@@ -25,17 +20,10 @@ public class ListagemProdutosTest {
     private void cadastrar(String codigo, String nome) {
         service.cadastrar(
                 new Produto(
-                        codigo, nome, nome,
+                        codigo, nome, "Feminina",
                         "M", "Preta", 59.90, 10, 2
                 )
         );
-    }
-
-    private List<String> codigosListados() {
-        return service.listar()
-                .stream()
-                .map(Produto::getCodigo)
-                .toList();
     }
 
     @Test
@@ -53,35 +41,35 @@ public class ListagemProdutosTest {
     }
 
     @Test
-    void naoDeveListarProdutosComEstoqueZerado() {
-        service.cadastrar(new Produto(
-                "001", "Blusa", "Feminina",
-                "M", "Preta", 59.90, 0, 2
-        ));
-
+    void naoDeveListarProdutosExcluidos() {
+        cadastrar("001", "Blusa");
         cadastrar("002", "Calça");
+
+        service.excluir("001");
 
         List<Produto> produtos = service.listar();
 
         assertEquals(1, produtos.size());
-        assertEquals("002", produtos.get(0).getCodigo());
+        assertFalse(codigosListados().contains("001"));
+        assertTrue(codigosListados().contains("002"));
     }
 
     @Test
-    void deveListarSomenteProdutosComEstoqueAcimaDoMinimo() {
-        service.cadastrar(new Produto(
-                "001", "Blusa", "Feminina",
-                "M", "Preta", 59.90, 10, 2
-        ));
+    void deveRetornarListaVaziaQuandoTodosForemExcluidos() {
+        cadastrar("001", "Blusa");
 
-        service.cadastrar(new Produto(
-                "002", "Calça", "Feminina",
-                "M", "Preta", 79.90, 2, 2
-        ));
+        service.excluir("001");
 
         List<Produto> produtos = service.listar();
 
-        assertEquals(1, produtos.size());
-        assertEquals("001", produtos.get(0).getCodigo());
+        assertNotNull(produtos);
+        assertTrue(produtos.isEmpty());
+    }
+
+    private List<String> codigosListados() {
+        return service.listar()
+                .stream()
+                .map(Produto::getCodigo)
+                .toList();
     }
 }
