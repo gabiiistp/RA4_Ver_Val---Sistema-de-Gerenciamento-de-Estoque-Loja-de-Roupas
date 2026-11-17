@@ -16,7 +16,6 @@ public class ListagemProdutosTest {
     void setUp() {
         service = new ProdutoService(new ProdutoRepository());
     }
-
     private void cadastrar(String codigo, String nome) {
         service.cadastrar(
                 new Produto(
@@ -26,18 +25,22 @@ public class ListagemProdutosTest {
         );
     }
 
+    private List<String> codigosListados() {
+        return service.listar()
+                .stream()
+                .map(Produto::getCodigo)
+                .toList();
+    }
+
     @Test
     void deveListarTodosOsProdutosCadastrados() {
         cadastrar("001", "Blusa");
         cadastrar("002", "Calça");
         cadastrar("003", "Saia");
 
-        List<Produto> produtos = service.listar();
+        List<String> codigos = codigosListados();
 
-        assertEquals(3, produtos.size());
-        assertEquals("001", produtos.get(0).getCodigo());
-        assertEquals("002", produtos.get(1).getCodigo());
-        assertEquals("003", produtos.get(2).getCodigo());
+        assertEquals(List.of("001", "002", "003"), codigos);
     }
 
     @Test
@@ -47,11 +50,9 @@ public class ListagemProdutosTest {
 
         service.excluir("001");
 
-        List<Produto> produtos = service.listar();
+        List<String> codigos = codigosListados();
 
-        assertEquals(1, produtos.size());
-        assertFalse(codigosListados().contains("001"));
-        assertTrue(codigosListados().contains("002"));
+        assertEquals(List.of("002"), codigos);
     }
 
     @Test
@@ -60,16 +61,8 @@ public class ListagemProdutosTest {
 
         service.excluir("001");
 
-        List<Produto> produtos = service.listar();
+        List<String> codigos = codigosListados();
 
-        assertNotNull(produtos);
-        assertTrue(produtos.isEmpty());
-    }
-
-    private List<String> codigosListados() {
-        return service.listar()
-                .stream()
-                .map(Produto::getCodigo)
-                .toList();
+        assertEquals(List.of(), codigos);
     }
 }
