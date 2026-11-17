@@ -38,13 +38,9 @@ public class SaidaEstoqueTest {
         return repository.buscarPorCodigo("001").get().getQuantidade();
     }
 
-    private IllegalArgumentException saidaRecusada(
-            String codigo, int quantidade) {
-
-        return assertThrows(
-                IllegalArgumentException.class,
-                () -> estoqueService.registrarSaida(codigo, quantidade)
-        );
+    private IllegalArgumentException saidaRecusada(String codigo, int quantidade) {
+        return assertThrows(IllegalArgumentException.class,
+                () -> estoqueService.registrarSaida(codigo, quantidade));
     }
 
     @ParameterizedTest

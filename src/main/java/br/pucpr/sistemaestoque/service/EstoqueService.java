@@ -35,20 +35,11 @@ public class EstoqueService {
     // SAÍDA DO ESTOQUE  ·  responsável: Gabi
     // ============================================================
     public void registrarSaida(String codigo, int quantidade) {
-
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException(
-                    "A quantidade da saída deve ser maior que zero"
-            );
-        }
+        validarQuantidadeDaSaida(quantidade);
 
         Produto produto = buscarProdutoOuFalhar(codigo);
 
-        if (quantidade > produto.getQuantidade()) {
-            throw new IllegalArgumentException(
-                    "Estoque insuficiente para a saída"
-            );
-        }
+        validarEstoqueSuficiente(produto, quantidade);
 
         produto.setQuantidade(
                 produto.getQuantidade() - quantidade
@@ -57,14 +48,19 @@ public class EstoqueService {
 
     private void validarQuantidadeDaSaida(int quantidade) {
         if (quantidade <= 0) {
-            throw new IllegalArgumentException(MSG_QUANTIDADE_SAIDA_INVALIDA);
+            throw new IllegalArgumentException(
+                    "A quantidade da saída deve ser maior que zero"
+            );
         }
     }
 
-    // RN05 - a saída pode ser igual ao disponível, mas não maior
-    private void validarEstoqueSuficiente(Produto produto, int quantidade) {
+    private void validarEstoqueSuficiente(
+            Produto produto, int quantidade
+    ) {
         if (quantidade > produto.getQuantidade()) {
-            throw new IllegalArgumentException(MSG_ESTOQUE_INSUFICIENTE);
+            throw new IllegalArgumentException(
+                    "Estoque insuficiente para a saída"
+            );
         }
     }
 
