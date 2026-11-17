@@ -35,6 +35,10 @@ public class EstoqueService {
     // SAÍDA DO ESTOQUE  ·  responsável: Gabi
     // ============================================================
     public void registrarSaida(String codigo, int quantidade) {
+        validarQuantidadeDaSaida(quantidade);
+        Produto produto = buscarProdutoOuFalhar(codigo);
+        validarEstoqueSuficiente(produto, quantidade);
+        produto.setQuantidade(produto.getQuantidade() - quantidade);
     }
 
     private void validarQuantidadeDaSaida(int quantidade) {
