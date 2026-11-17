@@ -72,6 +72,8 @@ public class ProdutoService {
 
     public void editar(Produto dados) {
         validarProdutoExistente(dados.getCodigo());
+        validarCamposObrigatorios(dados);
+        validarPreco(dados);
 
         Produto produto = repository.buscarPorCodigo(
                 dados.getCodigo()

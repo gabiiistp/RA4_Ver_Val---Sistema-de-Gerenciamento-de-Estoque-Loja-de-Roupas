@@ -125,4 +125,56 @@ class EdicaoProdutoTest {
         assertEquals(4, atualizado.getEstoqueMinimo());
         assertEquals(10, atualizado.getQuantidade());
     }
+
+    @Test
+    void naoDeveEditarProdutoComCategoriaVazia() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "", "G", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+    @Test
+    void naoDeveEditarProdutoComTamanhoVazio() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+    @Test
+    void naoDeveEditarProdutoComCorVazia() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G", "", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
 }
