@@ -6,8 +6,6 @@ import br.pucpr.sistemaestoque.service.EstoqueService;
 import br.pucpr.sistemaestoque.service.ProdutoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,5 +55,13 @@ public class SaidaEstoqueTest {
         IllegalArgumentException erro = saidaRecusada("001", 5);
 
         assertEquals(MSG_NAO_ENCONTRADO, erro.getMessage());
+    }
+    @Test
+    void deveDiminuirAQuantidadeDoProdutoNaSaida() {
+        cadastrarBlusaCom10Unidades();
+
+        estoqueService.registrarSaida("001", 3);
+
+        assertEquals(7, quantidadeDaBlusa());
     }
 }
