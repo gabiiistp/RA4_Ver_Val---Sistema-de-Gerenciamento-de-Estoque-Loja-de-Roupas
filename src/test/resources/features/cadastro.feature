@@ -47,7 +47,7 @@ Funcionalidade: Cadastro de produtos
 
   # RN01 - técnica de partição de equivalência (um campo vazio por vez)
   Esquema do Cenário: Exigir os campos obrigatórios
-    Quando cadastro um produto com código "<codigo>", nome "<nome>", categoria "<categoria>", tamanho "<tamanho>", cor "<cor>", preço "59.90" e quantidade "10"
+    Quando cadastro um produto com código " ", nome " ", categoria " ", tamanho " ", cor " ", preço "59.90" e quantidade "10"
     Então o resultado deve ser "Todos os campos obrigatórios devem ser preenchidos"
 
     Exemplos:
