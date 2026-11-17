@@ -58,23 +58,60 @@ class EdicaoProdutoTest {
     }
 
     @Test
-    void naoDeveEditarProdutoJaExcluido() {
+    void naoDeveEditarProdutoQueFoiExcluido() {
         cadastrarBlusa();
+
         service.excluir("001");
 
-        IllegalArgumentException erro = editarEEsperarErro(
-                dadosDaBlusa("Saia", "Saia", "P", "Verde", 89.90)
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G",
+                "Azul", 79.90
         );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
 
         assertEquals(MSG_NAO_ENCONTRADO, erro.getMessage());
     }
+
+    @Test
+    void naoDeveEditarProdutoComCampoObrigatorioVazio() {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "", "Blusa", "G", "Azul", 79.90
+        );
+
+        IllegalArgumentException erro =
+                editarEEsperarErro(dados);
+
+        assertEquals(
+                MSG_CAMPOS_OBRIGATORIOS,
+                erro.getMessage()
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-1.0, -0.01, 0.0})
+    void naoDeveEditarProdutoComPrecoMenorOuIgualAZero(double preco) {
+        cadastrarBlusa();
+
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G", "Azul", preco
+        );
+
+        IllegalArgumentException erro = editarEEsperarErro(dados);
+
+        assertEquals(MSG_PRECO_INVALIDO, erro.getMessage());
+    }
+
     @Test
     void deveAlterarOsDadosDoProdutoExistente() {
         cadastrarBlusa();
 
-        Produto dados = new Produto(
-                "001", "Blusa Floral", "Blusa", "G", "Azul",
-                79.90, 999, 4
+        Produto dados = dadosDaBlusa(
+                "Blusa Floral", "Blusa", "G",
+                "Azul", 79.90
         );
 
         service.editar(dados);
