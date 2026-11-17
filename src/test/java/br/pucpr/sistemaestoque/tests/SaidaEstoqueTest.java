@@ -6,6 +6,8 @@ import br.pucpr.sistemaestoque.service.EstoqueService;
 import br.pucpr.sistemaestoque.service.ProdutoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -45,7 +47,27 @@ public class SaidaEstoqueTest {
         );
     }
 
-    // Testes de produto inexistente e excluído
+    @ParameterizedTest
+    @ValueSource(ints = {-10, -1, 0})
+    void naoDeveRegistrarSaidaComQuantidadeMenorOuIgualAZero(
+            int quantidadeInvalida
+    ) {
+        cadastrarBlusaCom10Unidades();
+
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> estoqueService.registrarSaida(
+                        "001", quantidadeInvalida
+                )
+        );
+
+        assertEquals(
+                "A quantidade da saída deve ser maior que zero",
+                erro.getMessage()
+        );
+
+        assertEquals(10, quantidadeDaBlusa());
+    }
 
     @Test
     void naoDeveRegistrarSaidaParaProdutoQueNuncaFoiCadastrado() {
