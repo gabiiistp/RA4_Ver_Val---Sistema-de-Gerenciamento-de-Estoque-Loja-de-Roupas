@@ -72,6 +72,17 @@ public class ProdutoService {
 
     public void editar(Produto dados) {
         validarProdutoExistente(dados.getCodigo());
+
+        Produto produto = repository.buscarPorCodigo(
+                dados.getCodigo()
+        ).get();
+
+        produto.setNome(dados.getNome());
+        produto.setCategoria(dados.getCategoria());
+        produto.setTamanho(dados.getTamanho());
+        produto.setCor(dados.getCor());
+        produto.setPreco(dados.getPreco());
+        produto.setEstoqueMinimo(dados.getEstoqueMinimo());
     }
 
     private void validarDadosDaEdicao(Produto dados) {
