@@ -35,7 +35,7 @@ public class MovimentacaoService {
     // LOG DE SAÍDA
     // ============================================================
     public void registrarSaida(String codigoProduto, int quantidade) {
-        // a implementar (TDD: Pedro)
+        registrar(codigoProduto, TipoMovimentacao.SAIDA, quantidade);
     }
 
     // ============================================================
@@ -46,11 +46,17 @@ public class MovimentacaoService {
     }
 
     public List<Movimentacao> listarHistoricoDoProduto(String codigoProduto) {
-        return new ArrayList<>(); // a implementar (TDD: Pedro)
+        List<Movimentacao> doProduto = new ArrayList<>();
+        for (Movimentacao movimentacao : repository.listarTodas()) {
+            if (movimentacao.getCodigoProduto().equals(codigoProduto)) {
+                doProduto.add(movimentacao);
+            }
+        }
+        return doProduto;
     }
 
     // ============================================================
-    // APOIO (reaproveitado pelo log de saída)
+    // APOIO (usado pelo log de entrada e pelo de saída)
     // ============================================================
     private void registrar(String codigoProduto, TipoMovimentacao tipo, int quantidade) {
         validarCodigoDoProduto(codigoProduto);
