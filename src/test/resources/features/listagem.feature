@@ -15,18 +15,31 @@ Funcionalidade: Listagem de produtos
     E a listagem deve conter o produto de código "002"
     E a listagem deve conter o produto de código "003"
 
-  # Partição de equivalência / valor limite: nenhum, um e vários produtos
-  Esquema do Cenário: Listar conforme a quantidade de produtos cadastrados
-    Dado que o estoque possui <cadastrados> produtos cadastrados
+  # nenhum, um e vários produtos
+  Cenário: Listar quando não há nenhum produto cadastrado
+    Dado que o estoque possui 0 produtos cadastrados
     Quando listo todos os produtos do estoque
-    Então a listagem deve conter <listados> produtos
+    Então a listagem deve conter 0 produtos
 
-    Exemplos:
-      | cadastrados | listados |
-      | 0           | 0        |
-      | 1           | 1        |
-      | 2           | 2        |
-      | 5           | 5        |
+  Cenário: Listar quando há apenas 1 produto cadastrado
+    Dado que o estoque possui o produto de código "001"
+    Quando listo todos os produtos do estoque
+    Então a listagem deve conter 1 produtos
+
+  Cenário: Listar quando há 2 produtos cadastrados
+    Dado que o estoque possui o produto de código "001"
+    E que o estoque possui o produto de código "002"
+    Quando listo todos os produtos do estoque
+    Então a listagem deve conter 2 produtos
+
+  Cenário: Listar quando há 5 produtos cadastrados
+    Dado que o estoque possui o produto de código "001"
+    E que o estoque possui o produto de código "002"
+    E que o estoque possui o produto de código "003"
+    E que o estoque possui o produto de código "004"
+    E que o estoque possui o produto de código "005"
+    Quando listo todos os produtos do estoque
+    Então a listagem deve conter 5 produtos
 
   # Cenário negativo: produto excluído não aparece
   Cenário: Não listar o produto que foi excluído

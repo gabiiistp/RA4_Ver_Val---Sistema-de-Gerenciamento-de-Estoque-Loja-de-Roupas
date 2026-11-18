@@ -33,39 +33,52 @@ Funcionalidade: Histórico de movimentações do estoque (log de entrada e saíd
     E o total de registros do produto de código "001" no histórico deve ser 2
 
   # Valor limite (log de entrada): a fronteira está entre 0 e 1
-  Esquema do Cenário: Validar a quantidade de uma entrada no histórico
+  Cenário: Recusar entrada de -1 unidade no histórico
     Dado que o histórico de movimentações está vazio
-    Quando registro no histórico uma entrada de <quantidade> unidades do produto de código "001"
-    Então o registro no histórico deve resultar em "<resultado>"
-    E o total de registros no histórico deve ser <total>
+    Quando registro no histórico uma entrada de -1 unidades do produto de código "001"
+    Então o registro no histórico deve resultar em "A quantidade da movimentação deve ser maior que zero"
+    E o total de registros no histórico deve ser 0
 
-    Exemplos:
-      | quantidade | resultado                                            | total |
-      | -1         | A quantidade da movimentação deve ser maior que zero | 0     |
-      | 0          | A quantidade da movimentação deve ser maior que zero | 0     |
-      | 1          | Movimentação registrada com sucesso                  | 1     |
+  Cenário: Recusar entrada de 0 unidades no histórico
+    Dado que o histórico de movimentações está vazio
+    Quando registro no histórico uma entrada de 0 unidades do produto de código "001"
+    Então o registro no histórico deve resultar em "A quantidade da movimentação deve ser maior que zero"
+    E o total de registros no histórico deve ser 0
+
+  Cenário: Aceitar entrada de 1 unidade no histórico
+    Dado que o histórico de movimentações está vazio
+    Quando registro no histórico uma entrada de 1 unidades do produto de código "001"
+    Então o registro no histórico deve resultar em "Movimentação registrada com sucesso"
+    E o total de registros no histórico deve ser 1
 
   # Valor limite (log de saída): a fronteira está entre 0 e 1
-  Esquema do Cenário: Validar a quantidade de uma saída no histórico
+  Cenário: Recusar saída de -1 unidade no histórico
     Dado que o histórico de movimentações está vazio
-    Quando registro no histórico uma saída de <quantidade> unidades do produto de código "001"
-    Então o registro no histórico deve resultar em "<resultado>"
-    E o total de registros no histórico deve ser <total>
+    Quando registro no histórico uma saída de -1 unidades do produto de código "001"
+    Então o registro no histórico deve resultar em "A quantidade da movimentação deve ser maior que zero"
+    E o total de registros no histórico deve ser 0
 
-    Exemplos:
-      | quantidade | resultado                                            | total |
-      | -1         | A quantidade da movimentação deve ser maior que zero | 0     |
-      | 0          | A quantidade da movimentação deve ser maior que zero | 0     |
-      | 1          | Movimentação registrada com sucesso                  | 1     |
-
-  # Partição de equivalência: código do produto preenchido x vazio
-  Esquema do Cenário: Não registrar movimentação sem o código do produto
+  Cenário: Recusar saída de 0 unidades no histórico
     Dado que o histórico de movimentações está vazio
-    Quando registro no histórico uma <tipo> de 5 unidades do produto de código ""
+    Quando registro no histórico uma saída de 0 unidades do produto de código "001"
+    Então o registro no histórico deve resultar em "A quantidade da movimentação deve ser maior que zero"
+    E o total de registros no histórico deve ser 0
+
+  Cenário: Aceitar saída de 1 unidade no histórico
+    Dado que o histórico de movimentações está vazio
+    Quando registro no histórico uma saída de 1 unidades do produto de código "001"
+    Então o registro no histórico deve resultar em "Movimentação registrada com sucesso"
+    E o total de registros no histórico deve ser 1
+
+  # código do produto preenchido x vazio
+  Cenário: Não registrar entrada sem o código do produto
+    Dado que o histórico de movimentações está vazio
+    Quando registro no histórico uma entrada de 5 unidades do produto de código ""
     Então o registro no histórico deve resultar em "O código do produto deve ser informado"
     E o total de registros no histórico deve ser 0
 
-    Exemplos:
-      | tipo    |
-      | entrada |
-      | saída   |
+  Cenário: Não registrar saída sem o código do produto
+    Dado que o histórico de movimentações está vazio
+    Quando registro no histórico uma saída de 5 unidades do produto de código ""
+    Então o registro no histórico deve resultar em "O código do produto deve ser informado"
+    E o total de registros no histórico deve ser 0

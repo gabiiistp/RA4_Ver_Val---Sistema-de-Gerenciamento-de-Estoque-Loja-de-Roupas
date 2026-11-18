@@ -18,19 +18,30 @@ Funcionalidade: Entrada de produtos no estoque
     E dou entrada de 3 unidades no produto de código "001"
     Então o produto de código "001" deve ficar com 18 unidades em estoque
 
-  # Técnica de valor limite: a fronteira está entre 0 e 1
-  Esquema do Cenário: Validar a quantidade da entrada
+  # Valor limite: a fronteira está entre 0 e 1
+  Cenário: Recusar entrada de -10 unidades
     Dado que o produto de código "001" tem 10 unidades em estoque
-    Quando dou entrada de <quantidade> unidades no produto de código "001"
-    Então a entrada deve resultar em "<resultado>"
-    E o produto de código "001" deve ficar com <estoque_final> unidades em estoque
+    Quando dou entrada de -10 unidades no produto de código "001"
+    Então a entrada deve resultar em "A quantidade da entrada deve ser maior que zero"
+    E o produto de código "001" deve ficar com 10 unidades em estoque
 
-    Exemplos:
-      | quantidade | resultado                                      | estoque_final |
-      | -10        | A quantidade da entrada deve ser maior que zero | 10            |
-      | -1         | A quantidade da entrada deve ser maior que zero | 10            |
-      | 0          | A quantidade da entrada deve ser maior que zero | 10            |
-      | 1          | Entrada registrada com sucesso                  | 11            |
+  Cenário: Recusar entrada de -1 unidade
+    Dado que o produto de código "001" tem 10 unidades em estoque
+    Quando dou entrada de -1 unidades no produto de código "001"
+    Então a entrada deve resultar em "A quantidade da entrada deve ser maior que zero"
+    E o produto de código "001" deve ficar com 10 unidades em estoque
+
+  Cenário: Recusar entrada de 0 unidades
+    Dado que o produto de código "001" tem 10 unidades em estoque
+    Quando dou entrada de 0 unidades no produto de código "001"
+    Então a entrada deve resultar em "A quantidade da entrada deve ser maior que zero"
+    E o produto de código "001" deve ficar com 10 unidades em estoque
+
+  Cenário: Aceitar entrada da menor quantidade válida, 1 unidade
+    Dado que o produto de código "001" tem 10 unidades em estoque
+    Quando dou entrada de 1 unidades no produto de código "001"
+    Então a entrada deve resultar em "Entrada registrada com sucesso"
+    E o produto de código "001" deve ficar com 11 unidades em estoque
 
   # RN11 - produto que nunca foi cadastrado
   Cenário: Registrar entrada em produto que nunca foi cadastrado

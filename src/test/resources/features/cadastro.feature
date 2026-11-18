@@ -7,53 +7,86 @@ Funcionalidade: Cadastro de produtos
   Contexto:
     Dado que estou no sistema de estoque
 
-  # RN01 a RN04 - cenário positivo
+  # Cenário positivo (RN01 a RN04 atendidas)
+
   Cenário: Cadastrar produto com sucesso
     Quando cadastro um produto com código "001", nome "Blusa", categoria "Blusa", tamanho "M", cor "Preta", preço "59.90" e quantidade "10"
     Então o resultado deve ser "Produto cadastrado com sucesso"
     E o produto "001" deve estar cadastrado
 
+
   # RN02 - código duplicado
+
   Cenário: Cadastrar produto com código duplicado
     Dado que já existe um produto com código "001"
     Quando tento cadastrar outro produto com o código "001"
     Então o resultado deve ser "Já existe um produto com este código"
     E o produto "001" deve continuar com o nome "Blusa"
 
-  # RN03 - técnica de valor limite
-  Esquema do Cenário: Validar o preço do produto
-    Quando cadastro um produto com código "002", nome "Saia", categoria "Saia", tamanho "P", cor "Verde", preço "<preco>" e quantidade "5"
-    Então o resultado deve ser "<resultado>"
 
-    Exemplos:
-      | preco | resultado                           |
-      | -1    | O preço deve ser maior que zero     |
-      | -0.01 | O preço deve ser maior que zero     |
-      | 0     | O preço deve ser maior que zero     |
-      | 0.01  | Produto cadastrado com sucesso      |
-      | 59.90 | Produto cadastrado com sucesso      |
+  # RN03 - preço maior que zero (valor limite: -1, -0.01, 0, 0.01)
 
-  # RN04 - técnica de valor limite
-  Esquema do Cenário: Validar a quantidade inicial do produto
-    Quando cadastro um produto com código "003", nome "Short", categoria "Short", tamanho "M", cor "Azul", preço "49.90" e quantidade "<quantidade>"
-    Então o resultado deve ser "<resultado>"
+  Cenário: Recusar cadastro com preço -1
+    Quando cadastro um produto com código "002", nome "Saia", categoria "Saia", tamanho "P", cor "Verde", preço "-1" e quantidade "5"
+    Então o resultado deve ser "O preço deve ser maior que zero"
 
-    Exemplos:
-      | quantidade | resultado                                 |
-      | -10        | A quantidade inicial não pode ser negativa |
-      | -1         | A quantidade inicial não pode ser negativa |
-      | 0          | Produto cadastrado com sucesso            |
-      | 1          | Produto cadastrado com sucesso            |
+  Cenário: Recusar cadastro com preço -0.01
+    Quando cadastro um produto com código "002", nome "Saia", categoria "Saia", tamanho "P", cor "Verde", preço "-0.01" e quantidade "5"
+    Então o resultado deve ser "O preço deve ser maior que zero"
 
-  # RN01 - técnica de partição de equivalência (um campo vazio por vez)
-  Esquema do Cenário: Exigir os campos obrigatórios
-    Quando cadastro um produto com código " ", nome " ", categoria " ", tamanho " ", cor " ", preço "59.90" e quantidade "10"
+  Cenário: Recusar cadastro com preço 0
+    Quando cadastro um produto com código "002", nome "Saia", categoria "Saia", tamanho "P", cor "Verde", preço "0" e quantidade "5"
+    Então o resultado deve ser "O preço deve ser maior que zero"
+
+  Cenário: Aceitar cadastro com o menor preço válido 0.01
+    Quando cadastro um produto com código "002", nome "Saia", categoria "Saia", tamanho "P", cor "Verde", preço "0.01" e quantidade "5"
+    Então o resultado deve ser "Produto cadastrado com sucesso"
+    E o produto "002" deve estar cadastrado
+
+  Cenário: Aceitar cadastro com preço 59.90
+    Quando cadastro um produto com código "002", nome "Saia", categoria "Saia", tamanho "P", cor "Verde", preço "59.90" e quantidade "5"
+    Então o resultado deve ser "Produto cadastrado com sucesso"
+    E o produto "002" deve estar cadastrado
+
+
+  # RN04 - quantidade inicial não negativa (valor limite: -10, -1, 0, 1)
+
+  Cenário: Recusar cadastro com quantidade inicial -10
+    Quando cadastro um produto com código "003", nome "Short", categoria "Short", tamanho "M", cor "Azul", preço "49.90" e quantidade "-10"
+    Então o resultado deve ser "A quantidade inicial não pode ser negativa"
+
+  Cenário: Recusar cadastro com quantidade inicial -1
+    Quando cadastro um produto com código "003", nome "Short", categoria "Short", tamanho "M", cor "Azul", preço "49.90" e quantidade "-1"
+    Então o resultado deve ser "A quantidade inicial não pode ser negativa"
+
+  Cenário: Aceitar cadastro com quantidade inicial 0
+    Quando cadastro um produto com código "003", nome "Short", categoria "Short", tamanho "M", cor "Azul", preço "49.90" e quantidade "0"
+    Então o resultado deve ser "Produto cadastrado com sucesso"
+    E o produto "003" deve estar cadastrado
+
+  Cenário: Aceitar cadastro com quantidade inicial 1
+    Quando cadastro um produto com código "003", nome "Short", categoria "Short", tamanho "M", cor "Azul", preço "49.90" e quantidade "1"
+    Então o resultado deve ser "Produto cadastrado com sucesso"
+    E o produto "003" deve estar cadastrado
+
+  # RN01 - campos obrigatórios (um campo vazio por vez)
+
+  Cenário: Recusar cadastro com código vazio
+    Quando cadastro um produto com código "", nome "Blusa", categoria "Blusa", tamanho "M", cor "Preta", preço "59.90" e quantidade "10"
     Então o resultado deve ser "Todos os campos obrigatórios devem ser preenchidos"
 
-    Exemplos:
-      | codigo | nome  | categoria | tamanho | cor   |
-      |        | Blusa | Blusa     | M       | Preta |
-      | 006    |       | Blusa     | M       | Preta |
-      | 006    | Blusa |           | M       | Preta |
-      | 006    | Blusa | Blusa     |         | Preta |
-      | 006    | Blusa | Blusa     | M       |       |
+  Cenário: Recusar cadastro com nome vazio
+    Quando cadastro um produto com código "006", nome "", categoria "Blusa", tamanho "M", cor "Preta", preço "59.90" e quantidade "10"
+    Então o resultado deve ser "Todos os campos obrigatórios devem ser preenchidos"
+
+  Cenário: Recusar cadastro com categoria vazia
+    Quando cadastro um produto com código "006", nome "Blusa", categoria "", tamanho "M", cor "Preta", preço "59.90" e quantidade "10"
+    Então o resultado deve ser "Todos os campos obrigatórios devem ser preenchidos"
+
+  Cenário: Recusar cadastro com tamanho vazio
+    Quando cadastro um produto com código "006", nome "Blusa", categoria "Blusa", tamanho "", cor "Preta", preço "59.90" e quantidade "10"
+    Então o resultado deve ser "Todos os campos obrigatórios devem ser preenchidos"
+
+  Cenário: Recusar cadastro com cor vazia
+    Quando cadastro um produto com código "006", nome "Blusa", categoria "Blusa", tamanho "M", cor "", preço "59.90" e quantidade "10"
+    Então o resultado deve ser "Todos os campos obrigatórios devem ser preenchidos"

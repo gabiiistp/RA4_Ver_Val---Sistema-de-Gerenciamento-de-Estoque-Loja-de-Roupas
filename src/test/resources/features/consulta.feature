@@ -41,9 +41,7 @@ Funcionalidade: Consulta de produtos
     Quando busco por produtos com o nome ""
     Então a busca deve ser recusada com a mensagem "O nome para busca não pode estar vazio"
 
-  # ============================================================
   # RN10 · Estoque baixo (quantidade <= estoque mínimo)
-  # ============================================================
 
   # RN10 - cenário positivo
   Cenário: Identificar produto com quantidade abaixo do mínimo
@@ -68,13 +66,17 @@ Funcionalidade: Consulta de produtos
     Então a consulta de estoque baixo deve retornar 0 produtos
 
   # RN10 - Técnica de valor limite: a fronteira está entre o mínimo e o mínimo + 1
-  Esquema do Cenário: Validar o limite do estoque mínimo
-    Dado que o catálogo tem o produto "Blusa" de código "001" com <quantidade> em estoque e mínimo 5
+  Cenário: Estoque 4 com mínimo 5 é considerado baixo
+    Dado que o catálogo tem o produto "Blusa" de código "001" com 4 em estoque e mínimo 5
     Quando consulto os produtos com estoque baixo
-    Então a consulta de estoque baixo deve retornar <resultado> produtos
+    Então a consulta de estoque baixo deve retornar 1 produtos
 
-    Exemplos:
-      | quantidade | resultado |
-      | 4          | 1         |
-      | 5          | 1         |
-      | 6          | 0         |
+  Cenário: Estoque 5 com mínimo 5 é considerado baixo
+    Dado que o catálogo tem o produto "Blusa" de código "001" com 5 em estoque e mínimo 5
+    Quando consulto os produtos com estoque baixo
+    Então a consulta de estoque baixo deve retornar 1 produtos
+
+  Cenário: Estoque 6 com mínimo 5 não é considerado baixo
+    Dado que o catálogo tem o produto "Blusa" de código "001" com 6 em estoque e mínimo 5
+    Quando consulto os produtos com estoque baixo
+    Então a consulta de estoque baixo deve retornar 0 produtos

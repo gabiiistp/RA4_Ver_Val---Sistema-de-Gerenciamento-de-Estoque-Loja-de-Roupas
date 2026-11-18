@@ -11,18 +11,24 @@ Funcionalidade: Exclusão de produtos
     Então a exclusão deve resultar em "Produto excluído com sucesso"
     E o produto de código "001" não deve mais existir no estoque
 
-  # RN11 - partição de equivalência: códigos que não existem
-  Esquema do Cenário: Excluir produto inexistente
+  # RN11 - códigos que não existem
+  Cenário: Excluir produto com código que nunca foi cadastrado
     Dado que o estoque possui o produto de código "001"
-    Quando excluo o produto de código "<codigo>"
+    Quando excluo o produto de código "999"
     Então a exclusão deve resultar em "Produto não encontrado"
     E o produto de código "001" ainda deve existir no estoque
 
-    Exemplos:
-      | codigo | situação                         |
-      | 999    | código que nunca foi cadastrado  |
-      | abc    | código com formato diferente     |
-      | 0001   | código parecido com um existente |
+  Cenário: Excluir produto com código de formato diferente
+    Dado que o estoque possui o produto de código "001"
+    Quando excluo o produto de código "abc"
+    Então a exclusão deve resultar em "Produto não encontrado"
+    E o produto de código "001" ainda deve existir no estoque
+
+  Cenário: Excluir produto com código parecido com um existente
+    Dado que o estoque possui o produto de código "001"
+    Quando excluo o produto de código "0001"
+    Então a exclusão deve resultar em "Produto não encontrado"
+    E o produto de código "001" ainda deve existir no estoque
 
   # RN11 - produto já excluído
   Cenário: Excluir o mesmo produto duas vezes
