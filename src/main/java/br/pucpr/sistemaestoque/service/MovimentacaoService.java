@@ -1,9 +1,10 @@
 package br.pucpr.sistemaestoque.service;
 
 import br.pucpr.sistemaestoque.model.Movimentacao;
+import br.pucpr.sistemaestoque.model.TipoMovimentacao;
 import br.pucpr.sistemaestoque.repository.MovimentacaoRepository;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MovimentacaoService {
@@ -15,10 +16,18 @@ public class MovimentacaoService {
     }
 
     public void registrarEntrada(String codigoProduto, int quantidade) {
-        // a implementar (TDD: Pedro)
+        if (codigoProduto == null || codigoProduto.isBlank()) {
+            throw new IllegalArgumentException("O código do produto deve ser informado");
+        }
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade da movimentação deve ser maior que zero");
+        }
+        int id = repository.listarTodas().size() + 1;
+        repository.salvar(new Movimentacao(id, codigoProduto, TipoMovimentacao.ENTRADA,
+                quantidade, LocalDateTime.now()));
     }
 
     public List<Movimentacao> listarHistorico() {
-        return new ArrayList<>(); // a implementar (TDD: Pedro)
+        return repository.listarTodas();
     }
 }
