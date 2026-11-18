@@ -64,31 +64,6 @@
 
 <img width="598" height="566" alt="Captura de tela_12-11-2026_175141_claude ai" src="https://github.com/user-attachments/assets/f4c21766-fb09-4964-94f3-1d4200c5835c" />
 
-### 🚧 Situação da `main`
-
-| Já está pronto | Quem usa |
-|---|---|
-| ✅ `Produto` e `ProdutoRepository` | Todos |
-| ✅ Cadastrar e excluir produto (TDD + BDD) | Isabelle |
-| ✅ Entrada no estoque (TDD + BDD) | Isabelle |
-| ✅ `EstoqueService` (entrada pronta, **saída vazia para a Gabriela**) | Isabelle · Gabriela |
-| ✅ `ContextoSistema` (sistema compartilhado dos steps do Cucumber) | Todos |
-| ⏳ Editar, listar e saída | Gabriela |
-| ⏳ Log de entrada e saída | Pedro |
-| ⏳ Busca por nome e estoque baixo | Laura |
-
-> 🔄 **Antes de começar ou de abrir PR:** `Git → Pull` na `main` e depois **Merge 'origin/main' into** a sua branch. O `pom.xml` mudou (PicoContainer), então recarreguem o Maven.
-
-### 📆 Cronograma
-
-| Quando | Fase | Quem |
-|---|---|---|
-| 12–13/11 | ✅ Setup + base + cadastrar e excluir | Isabelle |
-| 14/11 | ✅ Entrada no estoque + relatório da Isabelle | Isabelle |
-| 14–15/11 | 🥈🥉 Funcionalidades de cada um (TDD + BDD) | Gabriela · Pedro · Laura |
-| 16/11 | 🔗 Integração + PRs na `main` + relatório fechado | Todos |
-| **17/11** | 🗣️ **Consultoria + 🚀 entrega** | Todos |
-
 ---
 
 ## 🧑‍💻 Onde cada um desenvolve
