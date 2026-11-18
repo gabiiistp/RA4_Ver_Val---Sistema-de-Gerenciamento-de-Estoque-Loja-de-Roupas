@@ -5,6 +5,7 @@ import br.pucpr.sistemaestoque.model.TipoMovimentacao;
 import br.pucpr.sistemaestoque.repository.MovimentacaoRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,10 +32,21 @@ public class MovimentacaoService {
     }
 
     // ============================================================
+    // LOG DE SAÍDA
+    // ============================================================
+    public void registrarSaida(String codigoProduto, int quantidade) {
+        // a implementar (TDD: Pedro)
+    }
+
+    // ============================================================
     // CONSULTA DO HISTÓRICO
     // ============================================================
     public List<Movimentacao> listarHistorico() {
         return repository.listarTodas();
+    }
+
+    public List<Movimentacao> listarHistoricoDoProduto(String codigoProduto) {
+        return new ArrayList<>(); // a implementar (TDD: Pedro)
     }
 
     // ============================================================
