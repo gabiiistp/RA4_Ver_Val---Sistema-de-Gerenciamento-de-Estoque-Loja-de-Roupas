@@ -14,9 +14,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * RN10 - Identificar produtos com estoque baixo (quantidade <= estoque mínimo)  ·  Laura
- */
 class EstoqueBaixoTest {
 
     private ProdutoRepository repository;

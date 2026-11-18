@@ -16,9 +16,8 @@ public class EstoqueService {
         this.repository = repository;
     }
 
-    // ============================================================
     // ENTRADA NO ESTOQUE  ·  responsável: Isa
-    // ============================================================
+
     public void registrarEntrada(String codigo, int quantidade) {
         validarQuantidadeDaEntrada(quantidade);
         Produto produto = buscarProdutoOuFalhar(codigo);
@@ -31,9 +30,7 @@ public class EstoqueService {
         }
     }
 
-    // ============================================================
     // SAÍDA DO ESTOQUE  ·  responsável: Gabi
-    // ============================================================
     public void registrarSaida(String codigo, int quantidade) {
         validarQuantidadeDaSaida(quantidade);
 
@@ -64,9 +61,7 @@ public class EstoqueService {
         }
     }
 
-    // ============================================================
     // APOIO (usado pela entrada e pela saída)
-    // ============================================================
 
     /** Reutilizável: a saída da Gabi pode chamar este mesmo método (RN11) */
     private Produto buscarProdutoOuFalhar(String codigo) {

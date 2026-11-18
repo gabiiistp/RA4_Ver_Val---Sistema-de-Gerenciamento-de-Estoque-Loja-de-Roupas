@@ -2,10 +2,6 @@ package br.pucpr.sistemaestoque.model;
 
 import java.time.LocalDateTime;
 
-/**
- * Um registro do histórico de movimentações  ·  responsável: Pedro
- * Guarda só o código do produto, por isso não depende da classe Produto.
- */
 public class Movimentacao {
 
     private final int id;

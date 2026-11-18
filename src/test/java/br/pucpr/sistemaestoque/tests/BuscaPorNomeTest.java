@@ -16,9 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * RN09 - Consultar produto pelo nome  ·  Laura
- */
 class BuscaPorNomeTest {
 
     private ProdutoRepository repository;

@@ -6,14 +6,6 @@ import br.pucpr.sistemaestoque.repository.ProdutoRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Consulta de produtos  ·  responsável: Laura
- *
- * RN09 - Consultar produto pelo nome
- * RN10 - Identificar produtos com estoque baixo (quantidade <= estoque mínimo)
- *
- * Classe nova, separada do ProdutoService, para não gerar conflito com a Isa/Gabi.
- */
 public class ConsultaService {
 
     private static final String MSG_NOME_BUSCA_VAZIO = "O nome para busca não pode estar vazio";
@@ -24,10 +16,10 @@ public class ConsultaService {
         this.repository = repository;
     }
 
-    // ============================================================
+
     // RN09 · BUSCAR PELO NOME
     // Busca parcial e sem diferenciar maiúsculas de minúsculas.
-    // ============================================================
+
     public List<Produto> buscarPorNome(String nome) {
         validarNomeBusca(nome);
         String procurado = nome.trim().toLowerCase();
@@ -43,9 +35,9 @@ public class ConsultaService {
         }
     }
 
-    // ============================================================
+
     // RN10 · ESTOQUE BAIXO (quantidade <= estoque mínimo)
-    // ============================================================
+
     public List<Produto> listarEstoqueBaixo() {
         return repository.listarTodos().stream()
                 .filter(this::estaComEstoqueBaixo)

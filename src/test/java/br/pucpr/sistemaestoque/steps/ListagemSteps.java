@@ -13,12 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Steps da feature de listagem  ·  Gabi
- *
- * O Dado "que o estoque possui o produto de código ..." e o Quando "excluo o produto ..."
- * vêm do ExclusaoSteps (mesmo estoque).
- */
+
 public class ListagemSteps {
 
     private final ContextoSistema contexto;

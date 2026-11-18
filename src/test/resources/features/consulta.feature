@@ -4,9 +4,7 @@ Funcionalidade: Consulta de produtos
   Quero buscar produtos pelo nome e identificar os que estão com estoque baixo
   Para encontrar peças rapidamente e saber o que precisa ser reposto
 
-  # ============================================================
   # RN09 · Buscar produto pelo nome
-  # ============================================================
 
   # RN09 - cenário positivo
   Cenário: Buscar produtos que contêm o nome informado

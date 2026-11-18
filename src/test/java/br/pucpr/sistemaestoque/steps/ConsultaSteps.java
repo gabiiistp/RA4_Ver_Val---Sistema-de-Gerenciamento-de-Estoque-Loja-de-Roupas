@@ -12,9 +12,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Steps da feature de consulta (RN09 e RN10)  ·  Laura
- */
 public class ConsultaSteps {
 
     private final ContextoSistema contexto;
