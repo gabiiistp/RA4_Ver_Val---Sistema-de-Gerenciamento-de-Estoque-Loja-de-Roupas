@@ -126,11 +126,11 @@
 | 📸 Evidências | `evidencias/gabi/` |
 
 **Passo a passo**
-- [ ] 1. ✅ A base já está na `main`: faça o pull e atualize a sua branch
-- [ ] 2. Editar produto (RN11): chame o `validarProdutoExistente(codigo)` que já existe no `ProdutoService`
-- [ ] 3. Listar produtos (`repository.listarTodos()` já existe)
-- [ ] 4. Saída do estoque (RN05, RN07): implemente o `registrarSaida` e chame o `buscarProdutoOuFalhar(codigo)` do `EstoqueService`
-- [ ] 5. Evidências RED / GREEN / REFACTOR / BDD
+- [X] 1. A base já está na `main`: faça o pull e atualize a sua branch
+- [X] 2. Editar produto (RN11): chame o `validarProdutoExistente(codigo)` que já existe no `ProdutoService`
+- [X] 3. Listar produtos (`repository.listarTodos()` já existe)
+- [X] 4. Saída do estoque (RN05, RN07): implemente o `registrarSaida` e chame o `buscarProdutoOuFalhar(codigo)` do `EstoqueService`
+- [X] 5. Evidências RED / GREEN / REFACTOR / BDD
 
 ---
 
@@ -147,13 +147,13 @@
 | 📸 Evidências | `evidencias/pedro/` |
 
 **Passo a passo**
-- [ ] 1. ✅ Pode começar já (usa só o código do produto, sem depender de `Produto`)
-- [ ] 2. `Movimentacao` + `MovimentacaoRepository`
-- [ ] 3. Registrar entrada no log
-- [ ] 4. Registrar saída no log (RN08)
-- [ ] 5. Acrescentar o `MovimentacaoService` no `ContextoSistema` (uma linha)
-- [ ] 6. Combinar com Isabelle e Gabriela o método que elas vão chamar na integração (ex.: `registrar(codigo, tipo, quantidade)`)
-- [ ] 7. Evidências RED / GREEN / REFACTOR / BDD
+- [X] 1. Pode começar já (usa só o código do produto, sem depender de `Produto`)
+- [X] 2. `Movimentacao` + `MovimentacaoRepository`
+- [X] 3. Registrar entrada no log
+- [X] 4. Registrar saída no log (RN08)
+- [X] 5. Acrescentar o `MovimentacaoService` no `ContextoSistema` (uma linha)
+- [X] 6. Combinar com Isabelle e Gabriela o método que elas vão chamar na integração (ex.: `registrar(codigo, tipo, quantidade)`)
+- [X] 7. Evidências RED / GREEN / REFACTOR / BDD
 
 ---
 
@@ -168,11 +168,11 @@
 | 📸 Evidências | `evidencias/laura/` |
 
 **Passo a passo**
-- [ ] 1. ✅ A base já está na `main`: faça o pull e atualize a sua branch (`service.cadastrar(...)` monta os produtos dos testes)
-- [ ] 2. Buscar produto pelo nome (RN09)
-- [ ] 3. Consultar estoque baixo (RN10)
-- [ ] 4. Acrescentar o `ConsultaService` no `ContextoSistema` (uma linha)
-- [ ] 5. Evidências RED / GREEN / REFACTOR / BDD
+- [X] 1. A base já está na `main`: faça o pull e atualize a sua branch (`service.cadastrar(...)` monta os produtos dos testes)
+- [X] 2. Buscar produto pelo nome (RN09)
+- [X] 3. Consultar estoque baixo (RN10)
+- [X] 4. Acrescentar o `ConsultaService` no `ContextoSistema` (uma linha)
+- [X] 5. Evidências RED / GREEN / REFACTOR / BDD
 
 ---
 
@@ -478,17 +478,17 @@ mvn test
 
 ## ✅ Checklist de entrega · até 17/11
 
-- [ ] Escopo aprovado pelo professor
-- [ ] Código-fonte completo
-- [ ] Cenários BDD (`.feature`) positivos e negativos
-- [ ] Testes JUnit
-- [ ] Cenários de limite com `Esquema do Cenário` e técnicas de caixa preta citadas no relatório
-- [ ] Relatório dos passos do TDD (imagem + descrição) preenchido por todos, sem a página de guia e sem as caixas "Como preencher"
-- [ ] Evidências RED / GREEN / REFACTOR de cada integrante
-- [ ] Evidências dos cenários BDD
-- [ ] Integração: entrada e saída registram no histórico do Pedro
-- [ ] Repositório GitHub integrado na `main`
-- [ ] Todos os testes passando na `main` (JUnit e Cucumber)
+- [X] Escopo aprovado pelo professor
+- [X] Código-fonte completo
+- [X] Cenários BDD (`.feature`) positivos e negativos
+- [X] Testes JUnit
+- [X] Cenários de limite com `Esquema do Cenário` e técnicas de caixa preta citadas no relatório
+- [X] Relatório dos passos do TDD (imagem + descrição) preenchido por todos
+- [X] Evidências RED / GREEN / REFACTOR de cada integrante
+- [X] Evidências dos cenários BDD
+- [X] Integração: entrada e saída registram no histórico do Pedro
+- [X] Repositório GitHub integrado na `main`
+- [X] Todos os testes passando na `main` (JUnit e Cucumber)
 
 ---
 
