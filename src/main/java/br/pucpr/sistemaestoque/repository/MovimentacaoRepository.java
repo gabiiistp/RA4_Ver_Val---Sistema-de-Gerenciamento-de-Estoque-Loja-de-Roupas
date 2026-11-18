@@ -4,6 +4,7 @@ import br.pucpr.sistemaestoque.model.Movimentacao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /** Histórico de movimentações guardado em memória (na ordem em que aconteceram) */
 public class MovimentacaoRepository {
@@ -21,5 +22,11 @@ public class MovimentacaoRepository {
 
     public List<Movimentacao> listarTodas() {
         return new ArrayList<>(movimentacoes);
+    }
+
+    public List<Movimentacao> listarPorProduto(String codigoProduto) {
+        return movimentacoes.stream()
+                .filter(movimentacao -> movimentacao.getCodigoProduto().equals(codigoProduto))
+                .collect(Collectors.toList());
     }
 }

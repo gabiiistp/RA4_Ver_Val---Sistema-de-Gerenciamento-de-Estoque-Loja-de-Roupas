@@ -12,12 +12,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RegistroSaidaTest {
+
+    private static final String MSG_QUANTIDADE_INVALIDA = "A quantidade da movimentação deve ser maior que zero";
+    private static final String MSG_CODIGO_OBRIGATORIO = "O código do produto deve ser informado";
 
     private MovimentacaoService service;
 
@@ -26,14 +30,29 @@ class RegistroSaidaTest {
         service = new MovimentacaoService(new MovimentacaoRepository());
     }
 
+    private List<Movimentacao> historico() {
+        return service.listarHistorico();
+    }
+
+    private List<TipoMovimentacao> tiposDe(List<Movimentacao> movimentacoes) {
+        return movimentacoes.stream().map(Movimentacao::getTipo).collect(Collectors.toList());
+    }
+
+    private void assertSaidaRecusada(String codigo, int quantidade, String mensagemEsperada) {
+        IllegalArgumentException erro = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.registrarSaida(codigo, quantidade));
+
+        assertEquals(mensagemEsperada, erro.getMessage());
+        assertTrue(historico().isEmpty());
+    }
+
     @Test
     void deveRegistrarSaidaNoHistorico() {
         service.registrarSaida("001", 3);
 
-        List<Movimentacao> historico = service.listarHistorico();
-        assertEquals(1, historico.size());
-
-        Movimentacao movimentacao = historico.get(0);
+        assertEquals(1, historico().size());
+        Movimentacao movimentacao = historico().get(0);
         assertEquals("001", movimentacao.getCodigoProduto());
         assertEquals(TipoMovimentacao.SAIDA, movimentacao.getTipo());
         assertEquals(3, movimentacao.getQuantidade());
@@ -45,12 +64,9 @@ class RegistroSaidaTest {
         service.registrarEntrada("001", 10);
         service.registrarSaida("001", 3);
 
-        List<Movimentacao> historico = service.listarHistorico();
-        assertEquals(2, historico.size());
-        assertEquals(TipoMovimentacao.ENTRADA, historico.get(0).getTipo());
-        assertEquals(TipoMovimentacao.SAIDA, historico.get(1).getTipo());
-        assertEquals(1, historico.get(0).getId());
-        assertEquals(2, historico.get(1).getId());
+        assertEquals(List.of(TipoMovimentacao.ENTRADA, TipoMovimentacao.SAIDA), tiposDe(historico()));
+        assertEquals(1, historico().get(0).getId());
+        assertEquals(2, historico().get(1).getId());
     }
 
     @Test
@@ -60,40 +76,27 @@ class RegistroSaidaTest {
         service.registrarSaida("001", 3);
 
         List<Movimentacao> historicoDo001 = service.listarHistoricoDoProduto("001");
-        assertEquals(2, historicoDo001.size());
-        assertEquals(TipoMovimentacao.ENTRADA, historicoDo001.get(0).getTipo());
-        assertEquals(TipoMovimentacao.SAIDA, historicoDo001.get(1).getTipo());
+        assertEquals(List.of(TipoMovimentacao.ENTRADA, TipoMovimentacao.SAIDA), tiposDe(historicoDo001));
     }
 
     @ParameterizedTest(name = "saída de {0} unidades não deve ir para o histórico")
     @ValueSource(ints = {-10, -1, 0})
     void naoDeveRegistrarSaidaComQuantidadeMenorOuIgualAZero(int quantidadeInvalida) {
-        IllegalArgumentException erro = assertThrows(
-                IllegalArgumentException.class,
-                () -> service.registrarSaida("001", quantidadeInvalida));
-
-        assertEquals("A quantidade da movimentação deve ser maior que zero", erro.getMessage());
-        assertTrue(service.listarHistorico().isEmpty());
+        assertSaidaRecusada("001", quantidadeInvalida, MSG_QUANTIDADE_INVALIDA);
     }
 
     @Test
     void deveRegistrarSaidaComAMenorQuantidadeValida() {
         service.registrarSaida("001", 1);
 
-        List<Movimentacao> historico = service.listarHistorico();
-        assertEquals(1, historico.size());
-        assertEquals(1, historico.get(0).getQuantidade());
+        assertEquals(1, historico().size());
+        assertEquals(1, historico().get(0).getQuantidade());
     }
 
     @ParameterizedTest(name = "código \"{0}\" deve ser recusado")
     @NullAndEmptySource
     @ValueSource(strings = {"   "})
     void naoDeveRegistrarSaidaSemCodigoDoProduto(String codigoInvalido) {
-        IllegalArgumentException erro = assertThrows(
-                IllegalArgumentException.class,
-                () -> service.registrarSaida(codigoInvalido, 3));
-
-        assertEquals("O código do produto deve ser informado", erro.getMessage());
-        assertTrue(service.listarHistorico().isEmpty());
+        assertSaidaRecusada(codigoInvalido, 3, MSG_CODIGO_OBRIGATORIO);
     }
 }

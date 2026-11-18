@@ -5,13 +5,16 @@ import br.pucpr.sistemaestoque.model.TipoMovimentacao;
 import br.pucpr.sistemaestoque.repository.MovimentacaoRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Histórico (log) de movimentações  ·  responsável: Pedro
  *
  * RN08 - Toda entrada ou saída gera registro no histórico de movimentações
+ *
+ * Integração: a entrada (Isa) e a saída (Gabi) do EstoqueService chamam
+ * registrarEntrada / registrarSaida (ou registrar(codigo, tipo, quantidade))
+ * depois de atualizar a quantidade do produto.
  */
 public class MovimentacaoService {
 
@@ -39,6 +42,16 @@ public class MovimentacaoService {
     }
 
     // ============================================================
+    // MÉTODO ÚNICO DE REGISTRO (combinado com a Isa e a Gabi)
+    // ============================================================
+    public void registrar(String codigoProduto, TipoMovimentacao tipo, int quantidade) {
+        validarCodigoDoProduto(codigoProduto);
+        validarQuantidade(quantidade);
+        repository.salvar(new Movimentacao(repository.proximoId(), codigoProduto, tipo,
+                quantidade, LocalDateTime.now()));
+    }
+
+    // ============================================================
     // CONSULTA DO HISTÓRICO
     // ============================================================
     public List<Movimentacao> listarHistorico() {
@@ -46,25 +59,12 @@ public class MovimentacaoService {
     }
 
     public List<Movimentacao> listarHistoricoDoProduto(String codigoProduto) {
-        List<Movimentacao> doProduto = new ArrayList<>();
-        for (Movimentacao movimentacao : repository.listarTodas()) {
-            if (movimentacao.getCodigoProduto().equals(codigoProduto)) {
-                doProduto.add(movimentacao);
-            }
-        }
-        return doProduto;
+        return repository.listarPorProduto(codigoProduto);
     }
 
     // ============================================================
-    // APOIO (usado pelo log de entrada e pelo de saída)
+    // VALIDAÇÕES
     // ============================================================
-    private void registrar(String codigoProduto, TipoMovimentacao tipo, int quantidade) {
-        validarCodigoDoProduto(codigoProduto);
-        validarQuantidade(quantidade);
-        repository.salvar(new Movimentacao(repository.proximoId(), codigoProduto, tipo,
-                quantidade, LocalDateTime.now()));
-    }
-
     private void validarCodigoDoProduto(String codigoProduto) {
         if (codigoProduto == null || codigoProduto.isBlank()) {
             throw new IllegalArgumentException(MSG_CODIGO_OBRIGATORIO);
